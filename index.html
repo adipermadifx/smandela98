@@ -2,1853 +2,1452 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMANDELA '98 - Portal Alumni SMAN 8 Cirebon Angkatan 1998</title>
-    <!-- Tailwind CSS CDN -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portal Alumni SMANDELA 98 Cirebon</title>
+    <!-- Tailwind CSS Play CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons for modern visuals -->
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Inter & Playfair Display for elegant touch -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
     
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0B2447',
+                            sky: '#19376D',
+                            accent: '#E0F4FF',
+                            gold: '#F39C12',
+                            goldlight: '#F1C40F'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
         }
-        .font-serif-header {
-            font-family: 'Playfair Display', serif;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-        /* Megamendung-inspired custom background styling */
-        .megamendung-gradient {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0284c7 100%);
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
         }
-        .megamendung-pattern {
-            background-color: #0f172a;
-            background-image: radial-gradient(circle at 100% 150%, #1e3a8a 24%, #0f172a 25%, #0f172a 28%, #1e3a8a 29%, #1e3a8a 36%, #0f172a 37%, #0f172a 40%, #0ea5e9 41%, #0ea5e9 48%, #0f172a 49%);
-            background-size: 80px 40px;
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
         }
-        /* Smooth transitions for tabs and interactive elements */
-        .tab-transition {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* Custom card styling with subtle shadow and border */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+        .mega-mendung-bg {
+            background-color: #0b2447;
+            background-image: radial-gradient(circle at 100% 150%, #19376d 24%, #0b2447 25%, #0b2447 28%, #19376d 29%, #19376d 36%, #0b2447 37%, #0b2447 40%, #19376d 41%, #19376d 48%, #0b2447 49%);
+            background-size: 40px 40px;
         }
     </style>
 </head>
-<body class="text-slate-800 min-h-screen flex flex-col pb-24 md:pb-0">
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-24 md:pb-6 flex flex-col">
 
-    <!-- Custom non-blocking Toast System -->
-    <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:right-5 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-300 bg-emerald-600 text-white px-6 py-3.5 rounded-xl shadow-2xl flex items-center gap-3">
-        <span class="p-1 bg-white/20 rounded-lg"><i class="fa-solid fa-circle-check text-lg"></i></span>
-        <div>
-            <p id="toast-title" class="font-bold text-xs uppercase tracking-wider">Berhasil</p>
-            <p id="toast-message" class="text-sm font-medium">Data berhasil diperbarui!</p>
-        </div>
-    </div>
-
-    <!-- Custom Modal Confirm Dialog replacing native confirm() -->
-    <div id="custom-confirm-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl space-y-4 border border-slate-100">
-            <div class="flex items-center gap-3 text-rose-600">
-                <div class="p-2 bg-rose-50 rounded-lg"><i class="fa-solid fa-triangle-exclamation text-xl"></i></div>
-                <h4 class="font-bold text-slate-900 text-base">Konfirmasi Aksi</h4>
-            </div>
-            <p id="confirm-modal-text" class="text-xs text-slate-600 leading-relaxed">Apakah Anda yakin ingin melakukan aksi ini? Aksi ini tidak dapat dibatalkan.</p>
-            <div class="flex items-center justify-end gap-2.5 pt-2">
-                <button id="confirm-btn-cancel" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Batal</button>
-                <button id="confirm-btn-proceed" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Ya, Lanjutkan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- DESKTOP HEADER (Hidden on mobile) -->
-    <header class="megamendung-gradient text-white shadow-md sticky top-0 z-40 hidden md:block">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('beranda')">
-                <div class="w-12 h-12 bg-amber-400 rounded-full flex items-center justify-center text-slate-900 font-extrabold shadow-lg border-2 border-white text-xl">
-                    98
+    <!-- HEADER UTAMA (TERANG & STYLISH) -->
+    <header class="bg-white/90 border-b border-slate-200/80 sticky top-0 z-40 backdrop-blur-md shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3.5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-brand-blue rounded-full flex items-center justify-center text-white font-extrabold text-xl shadow-md border-2 border-slate-100">
+                    8
                 </div>
                 <div>
-                    <h1 class="text-lg font-extrabold tracking-tight leading-none text-white">SMANDELA 98 CIREBON</h1>
-                    <p class="text-[10px] text-sky-200 uppercase tracking-widest mt-1">Ikatan Alumni SMAN 8 Cirebon Angkatan 1998</p>
+                    <h1 class="text-sm md:text-lg font-bold tracking-tight text-brand-blue flex items-center gap-1.5">
+                        SMANDELA '98 <span class="text-xs bg-brand-gold/10 text-brand-gold px-2 py-0.5 rounded-full border border-brand-gold/20">Cirebon</span>
+                    </h1>
+                    <p class="text-[10px] md:text-xs text-slate-500">Ikatan Alumni SMAN 8 Cirebon Angkatan 1998</p>
                 </div>
             </div>
             
-            <nav class="flex items-center space-x-1">
-                <button onclick="switchTab('beranda')" class="nav-btn px-3 py-2 rounded-xl font-semibold text-xs lg:text-sm transition-all duration-200 flex items-center gap-1.5 hover:bg-white/10" data-target="beranda">
-                    <i class="fa-solid fa-house"></i> Beranda
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-1.5">
+                <button onclick="switchTab('beranda')" class="nav-btn-pc bg-brand-blue text-white px-4 py-2 rounded-xl text-sm font-semibold transition shadow-sm" id="pc-tab-beranda">
+                    <i class="fa-solid fa-house mr-1.5"></i> Beranda
                 </button>
-                <button onclick="switchTab('kabar')" class="nav-btn px-3 py-2 rounded-xl font-semibold text-xs lg:text-sm transition-all duration-200 flex items-center gap-1.5 hover:bg-white/10" data-target="kabar">
-                    <i class="fa-solid fa-comment-dots"></i> Kabar Alumni
+                <button onclick="switchTab('alumni')" class="nav-btn-pc text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-xl text-sm font-semibold transition" id="pc-tab-alumni">
+                    <i class="fa-solid fa-users mr-1.5"></i> Direktori
                 </button>
-                <button onclick="switchTab('direktori')" class="nav-btn px-3 py-2 rounded-xl font-semibold text-xs lg:text-sm transition-all duration-200 flex items-center gap-1.5 hover:bg-white/10" data-target="direktori">
-                    <i class="fa-solid fa-users"></i> Cari Teman
+                <button onclick="switchTab('status')" class="nav-btn-pc text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-xl text-sm font-semibold transition" id="pc-tab-status">
+                    <i class="fa-solid fa-comments mr-1.5"></i> Kabar Alumni
                 </button>
-                <button onclick="switchTab('loker')" class="nav-btn px-3 py-2 rounded-xl font-semibold text-xs lg:text-sm transition-all duration-200 flex items-center gap-1.5 hover:bg-white/10" data-target="loker">
-                    <i class="fa-solid fa-store"></i> UMKM & Loker
+                <button onclick="switchTab('loker')" class="nav-btn-pc text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-xl text-sm font-semibold transition" id="pc-tab-loker">
+                    <i class="fa-solid fa-briefcase mr-1.5"></i> Loker & UMKM
                 </button>
-                <button onclick="switchTab('memori')" class="nav-btn px-3 py-2 rounded-xl font-semibold text-xs lg:text-sm transition-all duration-200 flex items-center gap-1.5 hover:bg-white/10" data-target="memori">
-                    <i class="fa-solid fa-images"></i> Nostalgia
+                <button onclick="switchTab('memori')" class="nav-btn-pc text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-xl text-sm font-semibold transition" id="pc-tab-memori">
+                    <i class="fa-solid fa-images mr-1.5"></i> Nostalgia
                 </button>
             </nav>
-
-            <button onclick="openModal('modal-daftar')" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-4 py-2 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 text-xs lg:text-sm flex items-center gap-1.5">
-                <i class="fa-solid fa-user-plus"></i> Update Data Diri
-            </button>
         </div>
     </header>
 
-    <!-- MOBILE HEADER (Hidden on desktop) -->
-    <header class="megamendung-gradient text-white shadow-md sticky top-0 z-40 md:hidden px-4 py-3.5 flex justify-between items-center">
-        <div class="flex items-center space-x-2.5">
-            <div class="w-9 h-9 bg-amber-400 rounded-full flex items-center justify-center text-slate-900 font-bold border-2 border-white text-sm">
-                98
+    <!-- CONTAINER UTAMA -->
+    <main class="max-w-6xl w-full mx-auto px-4 py-6 flex-grow">
+
+        <!-- DASHBOARD STATISTIK (CLEAN LIGHT DESIGN) -->
+        <div class="grid grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div class="bg-white border border-slate-200/70 rounded-2xl p-3 md:p-5 text-center shadow-sm">
+                <div class="w-8 h-8 md:w-10 md:h-10 mx-auto mb-1.5 md:mb-2 bg-blue-500/10 text-blue-600 rounded-full flex items-center justify-center text-sm md:text-lg">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <div class="text-lg md:text-3xl font-black text-slate-800" id="stat-alumni">0</div>
+                <div class="text-[9px] md:text-xs text-slate-500 uppercase tracking-wider font-semibold">Alumni</div>
             </div>
-            <div>
-                <h1 class="text-sm font-bold leading-none tracking-tight">SMANDELA 98</h1>
-                <p class="text-[9px] text-sky-200 uppercase tracking-wider">Alumni SMAN 8 Cirebon</p>
+            <div class="bg-white border border-slate-200/70 rounded-2xl p-3 md:p-5 text-center shadow-sm">
+                <div class="w-8 h-8 md:w-10 md:h-10 mx-auto mb-1.5 md:mb-2 bg-emerald-500/10 text-emerald-600 rounded-full flex items-center justify-center text-sm md:text-lg">
+                    <i class="fa-solid fa-comment-dots"></i>
+                </div>
+                <div class="text-lg md:text-3xl font-black text-slate-800" id="stat-status">0</div>
+                <div class="text-[9px] md:text-xs text-slate-500 uppercase tracking-wider font-semibold">Kabar</div>
+            </div>
+            <div class="bg-white border border-slate-200/70 rounded-2xl p-3 md:p-5 text-center shadow-sm">
+                <div class="w-8 h-8 md:w-10 md:h-10 mx-auto mb-1.5 md:mb-2 bg-amber-500/10 text-amber-600 rounded-full flex items-center justify-center text-sm md:text-lg">
+                    <i class="fa-solid fa-store"></i>
+                </div>
+                <div class="text-lg md:text-3xl font-black text-slate-800" id="stat-loker">0</div>
+                <div class="text-[9px] md:text-xs text-slate-500 uppercase tracking-wider font-semibold">Usaha/Loker</div>
+            </div>
+            <div class="bg-white border border-slate-200/70 rounded-2xl p-3 md:p-5 text-center shadow-sm">
+                <div class="w-8 h-8 md:w-10 md:h-10 mx-auto mb-1.5 md:mb-2 bg-rose-500/10 text-rose-600 rounded-full flex items-center justify-center text-sm md:text-lg">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div class="text-lg md:text-3xl font-black text-slate-800" id="stat-agenda">0</div>
+                <div class="text-[9px] md:text-xs text-slate-500 uppercase tracking-wider font-semibold">Agenda</div>
             </div>
         </div>
-        <button onclick="openModal('modal-daftar')" class="bg-amber-400 hover:bg-amber-300 text-slate-900 text-xs font-bold py-1.5 px-3 rounded-lg shadow-md transition-all">
-            <i class="fa-solid fa-user-pen mr-1"></i> Update Data
-        </button>
-    </header>
 
-    <!-- MAIN CONTENT AREA -->
-    <main class="flex-grow max-w-6xl w-full mx-auto p-4 md:p-6 mb-8">
-        
-        <!-- ================= VIEW 1: BERANDA ================= -->
-        <section id="view-beranda" class="tab-content block space-y-6">
-            <!-- Hero banner with nostalgia focus -->
-            <div class="relative rounded-2xl overflow-hidden shadow-xl text-white megamendung-gradient">
-                <div class="absolute inset-0 opacity-10 megamendung-pattern"></div>
-                <div class="relative z-10 p-6 md:p-12 max-w-3xl space-y-4">
-                    <span class="inline-block bg-amber-400 text-slate-950 text-xs px-3 py-1 rounded-full font-extrabold tracking-wider uppercase shadow-sm">
-                        28 Tahun Perjalanan Sejak Kelulusan
+        <!-- VIEW 1: BERANDA -->
+        <section id="view-beranda" class="tab-view space-y-6">
+            <!-- Hero / Sambutan (Premium Gradient Blue for Wow Effect) -->
+            <div class="mega-mendung-bg rounded-3xl p-6 md:p-10 text-center relative overflow-hidden shadow-xl border border-slate-200/10">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-blue/90 via-transparent to-transparent opacity-80"></div>
+                <div class="relative z-10 max-w-2xl mx-auto space-y-4">
+                    <span class="bg-brand-gold text-brand-blue text-[10px] md:text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-widest shadow-md">
+                        Motto: Jalin Silaturahmi, Bangun Sinergi
                     </span>
-                    <h2 class="text-3xl md:text-5xl font-extrabold font-serif-header tracking-tight leading-tight">
-                        Temu Kangen & <br class="hidden md:block">Kolaborasi SMANDELA 98
+                    <h2 class="text-2xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                        Wilujeng Sumping, Alumni SMANDELA 98!
                     </h2>
-                    <p class="text-sm md:text-base text-slate-200 leading-relaxed font-light">
-                        Selamat datang kembali di rumah digital alumni SMA Negeri 8 Cirebon Angkatan 1998. Di sini kita berkumpul, berbagi cerita, menyambung kembali tali persaudaraan, dan saling mendukung dalam karir maupun usaha keluarga besar alumni.
+                    <p class="text-xs md:text-base text-slate-200 font-light leading-relaxed">
+                        Gerbang komunikasi interaktif dan basis data terintegrasi bagi seluruh keluarga besar SMAN 8 Cirebon Lulusan Angkatan Tahun 1998.
                     </p>
-                    <div class="flex flex-wrap gap-3 pt-3">
-                        <button onclick="switchTab('kabar')" class="bg-amber-400 text-slate-950 hover:bg-amber-300 font-bold px-5 py-2.5 rounded-xl shadow-lg transition-all text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-comments"></i> Lihat Kabar Terbaru
+                    <div class="pt-4 flex flex-wrap justify-center gap-3">
+                        <button onclick="openRegisterModal()" class="bg-brand-gold hover:bg-brand-goldlight text-brand-blue font-bold px-6 py-2.5 rounded-xl text-sm transition shadow-md flex items-center gap-2">
+                            <i class="fa-solid fa-user-plus"></i> Gabung Direktori
                         </button>
-                        <button onclick="switchTab('direktori')" class="bg-white text-blue-900 hover:bg-slate-100 font-bold px-5 py-2.5 rounded-xl shadow-lg transition-all text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-magnifying-glass text-blue-700"></i> Cari Teman Sekelas
+                        <button onclick="switchTab('status')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-6 py-2.5 border border-white/20 rounded-xl text-sm transition flex items-center gap-2 backdrop-blur-sm">
+                            <i class="fa-solid fa-comments"></i> Bagikan Kabar
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Nostalgia Quote Widget -->
-            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-sm flex items-start gap-4">
-                <div class="p-3 bg-amber-400/20 text-amber-700 rounded-xl text-xl shrink-0 hidden sm:block">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-amber-900 text-sm">Sudut Nostalgia Angkatan '98: "Nongkrong Dekat Kantin & Lagu Kaset Tape"</h4>
-                    <p class="text-xs text-amber-800 leading-relaxed mt-1">
-                        Ingat saat kita nongkrong di dekat kantin koperasi, janjian pakai surat karena HP belum umum, atau dengerin lagu-lagu Sheila on 7, Dewa 19, dan Gigi lewat kaset pita? Angkatan 1998 adalah saksi transisi milenium baru. Mari pertahankan hubungan hangat ini selamanya!
-                    </p>
-                </div>
-            </div>
-
-            <!-- Stats Dashboard Card -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center flex flex-col justify-center">
-                    <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 text-lg">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <div class="text-2xl md:text-3xl font-black text-slate-900" id="stat-alumni-count">0</div>
-                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Alumni Terdaftar</p>
-                </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center flex flex-col justify-center">
-                    <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-2 text-lg">
-                        <i class="fa-solid fa-comment-dots"></i>
-                    </div>
-                    <div class="text-2xl md:text-3xl font-black text-slate-900" id="stat-status-count">0</div>
-                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Kabar & Status</p>
-                </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center flex flex-col justify-center">
-                    <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 text-lg">
-                        <i class="fa-solid fa-briefcase"></i>
-                    </div>
-                    <div class="text-2xl md:text-3xl font-black text-slate-900" id="stat-jobs-count">0</div>
-                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Loker & Usaha</p>
-                </div>
-                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center flex flex-col justify-center">
-                    <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-2 text-lg">
-                        <i class="fa-solid fa-bullhorn"></i>
-                    </div>
-                    <div class="text-2xl md:text-3xl font-black text-slate-900" id="stat-agenda-count">0</div>
-                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Agenda Reuni</p>
-                </div>
-            </div>
-
-            <!-- Grid: Event list & Bursa Kerja preview -->
+            <!-- Konten Dua Kolom Beranda -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Agenda dinamis (Left) -->
-                <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-100 shadow-sm space-y-4">
-                    <div class="flex justify-between items-center border-b pb-3">
-                        <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
-                            <i class="fa-solid fa-calendar-days text-blue-600"></i> Agenda & Kegiatan Reuni '98
+                <!-- Kolom Agenda Reuni (Kiri - 2 Kolom) -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <span class="w-1.5 h-6 bg-brand-gold rounded-full"></span>
+                            📅 Agenda & Kegiatan Reuni
                         </h3>
-                        <button onclick="openModal('modal-tambah-agenda')" class="text-xs font-bold bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1">
+                        <button onclick="openAgendaModal()" class="text-xs px-3 py-1.5 bg-brand-blue hover:bg-brand-sky text-white rounded-xl font-semibold transition flex items-center gap-1 shadow-sm">
                             <i class="fa-solid fa-plus"></i> Tambah Agenda
                         </button>
                     </div>
                     
-                    <!-- Dynamic Agenda Container -->
-                    <div id="agenda-container" class="space-y-3.5">
-                        <!-- Dynamic agenda lists will render here -->
+                    <div id="agenda-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Agenda dimasukkan secara dinamis via JS -->
                     </div>
                 </div>
 
-                <!-- Info Kontak Panitia (Right) -->
-                <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm space-y-4 flex flex-col justify-between">
-                    <div>
-                        <h3 class="font-bold text-slate-900 text-base border-b pb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-headset text-amber-500"></i> Kontak Pengurus SMANDELA '98
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-2.5 leading-relaxed">
-                            Butuh bantuan registrasi, koreksi data, atau ingin menyalurkan bantuan sosial alumni angkatan 98? Hubungi Admin kami:
-                        </p>
-                        <div class="mt-4 space-y-2.5">
-                            <a href="https://wa.me/6285777662255" target="_blank" class="flex items-center gap-3 p-2.5 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-all group">
-                                <span class="p-2 bg-emerald-500 text-white rounded-lg shadow-sm"><i class="fa-brands fa-whatsapp"></i></span>
-                                <div class="text-left">
-                                    <p class="text-xs text-emerald-800 font-bold leading-none">WhatsApp Admin 1</p>
-                                    <p class="text-[11px] text-emerald-600 mt-0.5">Kang Cahaya</p>
-                                </div>
-                            </a>
-                            <a href="https://wa.me/6285220239982" target="_blank" class="flex items-center gap-3 p-2.5 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-all group">
-                                <span class="p-2 bg-emerald-500 text-white rounded-lg shadow-sm"><i class="fa-brands fa-whatsapp"></i></span>
-                                <div class="text-left">
-                                    <p class="text-xs text-emerald-800 font-bold leading-none">WhatsApp Admin 2</p>
-                                    <p class="text-[11px] text-emerald-600 mt-0.5">Kang Ujang</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= VIEW 2: KABAR ALUMNI & KOMENTAR ================= -->
-        <section id="view-kabar" class="tab-content hidden space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Left Column: Status Input and Status List -->
-                <div class="lg:col-span-2 space-y-6">
-                    <!-- Status Form Box -->
-                    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b pb-3">
-                            <div class="p-2 bg-blue-50 text-blue-600 rounded-lg"><i class="fa-solid fa-pen-to-square text-lg"></i></div>
-                            <div>
-                                <h3 class="font-bold text-slate-900 text-base">Bagikan Kabar & Cerita Anda</h3>
-                                <p class="text-xs text-slate-500">Tulis cerita, sapaan hangat, atau info menarik ke sesama alumni SMANDELA 98.</p>
-                            </div>
-                        </div>
-
-                        <form id="form-buat-status" onsubmit="handlePostStatus(event)" class="space-y-3">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Nama Anda *</label>
-                                    <input type="text" id="status-author" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Asep Sunandar">
-                                </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Kelas *</label>
-                                    <select id="status-class" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                                        <option value="IPA 1">IPA 1</option>
-                                        <option value="IPA 2">IPA 2</option>
-                                        <option value="IPS 1">IPS 1</option>
-                                        <option value="IPS 2">IPS 2</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1">Pesan Status *</label>
-                                <textarea id="status-content" required rows="3" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Tulis kabar Anda hari ini di sini..."></textarea>
-                            </div>
-                            <div class="flex justify-between items-center pt-2">
-                                <p class="text-[10px] text-slate-400"><i class="fa-solid fa-circle-info"></i> Status akan tersimpan online di database cloud</p>
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2 px-5 rounded-xl shadow-sm transition-all flex items-center gap-1.5">
-                                    <i class="fa-solid fa-paper-plane"></i> Posting Kabar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Status Feed List -->
-                    <div id="status-feed-container" class="space-y-4">
-                        <!-- Dynamically filled with statuses -->
-                    </div>
-                </div>
-
-                <!-- Right Column: Sidebar info and rules -->
+                <!-- Kolom Nostalgia Kilat (Kanan) -->
                 <div class="space-y-4">
-                    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3">
-                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2"><i class="fa-solid fa-gavel text-amber-500"></i> Aturan Linimasa</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">
-                            Media ini dibuat untuk merayakan nostalgia, menjalin silaturahmi, dan memperkuat relasi bisnis SMANDELA 98. 
-                        </p>
-                        <ul class="text-[11px] text-slate-600 space-y-1.5 list-disc pl-4 font-light">
-                            <li>Gunakan bahasa yang sopan dan hangat.</li>
-                            <li>Dilarang membahas politik praktis, SARA, atau konten berbau ujaran kebencian.</li>
-                            <li>Utamakan saling mendukung (guyub) dan menyemangati sesama alumni.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 shadow-sm">
-                        <h4 class="font-bold text-indigo-900 text-sm flex items-center gap-1.5"><i class="fa-solid fa-rocket"></i> Saling Berdaya</h4>
-                        <p class="text-xs text-indigo-800 leading-relaxed mt-1">
-                            Punya lowongan kerja di tempat kantor Anda bekerja atau rintisan UMKM baru? Yuk bagikan di menu <strong>UMKM & Loker</strong> agar dibantu promosikan oleh rekan seangkatan.
-                        </p>
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <span class="w-1.5 h-6 bg-brand-gold rounded-full"></span>
+                        📸 Nostalgia Terbaru
+                    </h3>
+                    <div id="home-nostalgia-grid" class="grid grid-cols-2 gap-3 bg-white p-4 border border-slate-200/60 rounded-2xl shadow-sm">
+                        <!-- Tampilan foto nostagia kilat dinamis -->
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= VIEW 3: DIREKTORI ALUMNI ================= -->
-        <section id="view-direktori" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-2xl p-5 md:p-6 border border-slate-100 shadow-sm space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-id-card-clip text-blue-600"></i> Direktori Resmi SMANDELA Angkatan 98
-                        </h2>
-                        <p class="text-xs text-slate-500 mt-1">Cari rekan seangkatan Anda berdasarkan nama, kelas, pekerjaan, atau domisili mereka saat ini.</p>
-                    </div>
-                    <button onclick="openModal('modal-daftar')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-sm transition-all flex items-center justify-center gap-1.5 shrink-0">
-                        <i class="fa-solid fa-user-plus"></i> Gabung / Perbarui Profil Anda
-                    </button>
+        <!-- VIEW 2: DIREKTORI ALUMNI -->
+        <section id="view-alumni" class="tab-view hidden space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">
+                        🔍 Cari Teman Seangkatan
+                    </h2>
+                    <p class="text-xs text-slate-500">Gunakan pencarian untuk menemukan data dan kontak alumni SMANDELA 98.</p>
                 </div>
+                <button onclick="openRegisterModal()" class="w-full md:w-auto bg-brand-blue hover:bg-brand-sky text-white font-bold px-5 py-2.5 rounded-xl text-sm transition shadow-md flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-user-plus"></i> Tambah Data Alumni Baru
+                </button>
+            </div>
 
-                <!-- Live Search and Filter Row -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                    <div class="relative sm:col-span-1">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
-                            <i class="fa-solid fa-magnifying-glass text-sm"></i>
-                        </span>
-                        <input type="text" id="alumni-search-input" onkeyup="filterAlumni()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white" placeholder="Cari Nama / Pekerjaan...">
-                    </div>
-
-                    <div class="relative">
-                        <select id="alumni-filter-class" onchange="filterAlumni()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl py-2.5 px-3.5 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
-                            <option value="">Semua Kelas</option>
-                            <option value="IPA 1">IPA 1</option>
-                            <option value="IPA 2">IPA 2</option>
-                            <option value="IPS 1">IPS 1</option>
-                            <option value="IPS 2">IPS 2</option>
-                        </select>
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400">
-                            <i class="fa-solid fa-chevron-down text-xs"></i>
-                        </span>
-                    </div>
-
-                    <div class="relative">
-                        <select id="alumni-filter-city" onchange="filterAlumni()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl py-2.5 px-3.5 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
-                            <option value="">Semua Kota Domisili</option>
-                        </select>
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400">
-                            <i class="fa-solid fa-chevron-down text-xs"></i>
-                        </span>
-                    </div>
+            <!-- Pencarian & Filter -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-slate-400 text-sm"></i>
+                    <input type="text" id="search-name" oninput="filterAlumni()" placeholder="Cari nama alumni..." class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                </div>
+                <div>
+                    <select id="filter-class" onchange="filterAlumni()" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                        <option value="">Semua Kelas (IPA/IPS)</option>
+                        <option value="IPA 1">IPA 1</option>
+                        <option value="IPA 2">IPA 2</option>
+                        <option value="IPA 3">IPA 3</option>
+                        <option value="IPS 1">IPS 1</option>
+                        <option value="IPS 2">IPS 2</option>
+                        <option value="IPS 3">IPS 3</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div class="relative">
+                    <i class="fa-solid fa-location-dot absolute left-3 top-3.5 text-slate-400 text-sm"></i>
+                    <input type="text" id="search-city" oninput="filterAlumni()" placeholder="Cari kota domisili..." class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
                 </div>
             </div>
 
-            <!-- Directory Grid Container -->
-            <div id="alumni-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Dynamically populated from JS state -->
-            </div>
-            
-            <!-- Empty state placeholder -->
-            <div id="alumni-empty-state" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
-                <p class="text-3xl text-slate-300"><i class="fa-solid fa-users-slash"></i></p>
-                <h4 class="font-bold text-slate-700 mt-3 text-sm">Alumni belum terdaftar</h4>
-                <p class="text-xs text-slate-400 mt-1">Ayo klik tombol "Gabung" di atas untuk menjadi yang pertama terdaftar!</p>
+            <!-- Daftar Alumni Grid -->
+            <div id="alumni-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Data Alumni dinamis lewat JS -->
             </div>
         </section>
 
-        <!-- ================= VIEW 4: BURSA KERJA & UMKM ================= -->
-        <section id="view-loker" class="tab-content hidden space-y-6">
-            <div class="bg-white rounded-2xl p-5 md:p-6 border border-slate-100 shadow-sm space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-briefcase text-emerald-600"></i> UMKM & Bursa Kerja Alumni '98
-                        </h2>
-                        <p class="text-xs text-slate-500 mt-1">Dukung usaha teman seangkatan Anda atau temukan info lowongan pekerjaan terbaru dari jejaring alumni 98.</p>
-                    </div>
-                    <div class="flex gap-2 shrink-0">
-                        <button onclick="openModal('modal-tambah-loker')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-sm transition-all flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-plus"></i> Pasang Iklan / Loker
-                        </button>
-                    </div>
+        <!-- VIEW 3: KABAR STATUS & KOMENTAR -->
+        <section id="view-status" class="tab-view hidden space-y-6">
+            <div class="max-w-2xl mx-auto space-y-6">
+                <!-- Form Buat Status (Bright UI Card) -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-md">
+                    <h3 class="text-sm font-semibold text-slate-800 mb-3 flex items-center gap-2">
+                        ✍️ Bagikan Kabar / Nostalgia Anda
+                    </h3>
+                    <form id="form-status" onsubmit="handleCreateStatus(event)" class="space-y-3">
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="text" id="status-author" placeholder="Nama Anda" required class="bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                            <select id="status-class" required class="bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                                <option value="" disabled selected>Pilih Kelas</option>
+                                <option value="IPA 1">IPA 1</option>
+                                <option value="IPA 2">IPA 2</option>
+                                <option value="IPA 3">IPA 3</option>
+                                <option value="IPS 1">IPS 1</option>
+                                <option value="IPS 2">IPS 2</option>
+                                <option value="IPS 3">IPS 3</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <textarea id="status-content" rows="3" placeholder="Apa kabar hari ini, rekan alumni SMANDELA 98? Bagikan cerita, pengumuman, atau nostalgia Anda di sini..." required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white resize-none transition-all"></textarea>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-brand-blue hover:bg-brand-sky text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow-sm flex items-center gap-1.5">
+                                <i class="fa-solid fa-paper-plane"></i> Kirim Status
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
-                <!-- Tabs specifically for separating Jobs and Businesses -->
-                <div class="flex border-b border-slate-100">
-                    <button onclick="switchLokerSubTab('umkm')" id="subtab-btn-umkm" class="px-5 py-3 text-xs font-bold border-b-2 border-emerald-600 text-emerald-600">
-                        <i class="fa-solid fa-store mr-1.5"></i> Usaha & UMKM Alumni
-                    </button>
-                    <button onclick="switchLokerSubTab('kerja')" id="subtab-btn-kerja" class="px-5 py-3 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800">
-                        <i class="fa-solid fa-briefcase mr-1.5"></i> Lowongan Pekerjaan (Loker)
-                    </button>
+                <!-- Kontainer Linimasa Status -->
+                <div id="timeline-container" class="space-y-4">
+                    <!-- Status dan Komentar akan dimuat di sini -->
                 </div>
-            </div>
-
-            <!-- Subtab 1: UMKM Grid Container -->
-            <div id="container-umkm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Dynamically populated from JS -->
-            </div>
-
-            <!-- Subtab 2: Loker Grid Container (hidden initially) -->
-            <div id="container-kerja" class="hidden grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Dynamically populated from JS -->
-            </div>
-            
-            <!-- Empty state for Loker/UMKM -->
-            <div id="loker-empty-state" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
-                <p class="text-3xl text-slate-300"><i class="fa-solid fa-store-slash"></i></p>
-                <h4 class="font-bold text-slate-700 mt-3 text-sm">Belum ada konten diposting</h4>
-                <p class="text-xs text-slate-400 mt-1">Ayo jadilah yang pertama memposting usaha atau lowongan pekerjaan Anda!</p>
             </div>
         </section>
 
-        <!-- ================= VIEW 5: NOSTALGIA & AGENDA ================= -->
-        <section id="view-memori" class="tab-content hidden space-y-6">
-            <!-- Event countdown header -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
-                <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-calendar-check text-rose-500"></i> Hitung Mundur Reuni Perak 28 Tahun
-                </h2>
-                <p class="text-xs text-slate-500 mt-1">Akan dilaksanakan pada 15 Agustus 2026 mendatang. Sudahkah Anda melakukan pemesanan tempat?</p>
-                
-                <div class="grid grid-cols-4 gap-3 max-w-lg mt-5">
-                    <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl text-center">
-                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-days">0</p>
-                        <p class="text-[9px] text-rose-500 font-bold uppercase tracking-wider">Hari</p>
-                    </div>
-                    <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl text-center">
-                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-hours">0</p>
-                        <p class="text-[9px] text-rose-500 font-bold uppercase tracking-wider">Jam</p>
-                    </div>
-                    <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl text-center">
-                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-minutes">0</p>
-                        <p class="text-[9px] text-rose-500 font-bold uppercase tracking-wider">Menit</p>
-                    </div>
-                    <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl text-center">
-                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-seconds">0</p>
-                        <p class="text-[9px] text-rose-500 font-bold uppercase tracking-wider">Detik</p>
-                    </div>
+        <!-- VIEW 4: LOKER & UMKM ALUMNI -->
+        <section id="view-loker" class="tab-view hidden space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">
+                        💼 Bursa Kerja & Usaha Alumni (UMKM 98)
+                    </h2>
+                    <p class="text-xs text-slate-500">Wadah saling mempromosikan produk, usaha lokal, atau berbagi loker sesama alumni.</p>
                 </div>
+                <button onclick="openLokerModal()" class="w-full md:w-auto bg-brand-blue hover:bg-brand-sky text-white font-bold px-5 py-2.5 rounded-xl text-sm transition shadow-md flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Tambah Usaha / Loker
+                </button>
             </div>
 
-            <!-- Nostalgia Gallery Grid -->
-            <div class="bg-white rounded-2xl p-5 md:p-6 border border-slate-100 shadow-sm space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-photo-film text-blue-600"></i> Galeri Nostalgia Masa Sekolah (1995 - 1998)
-                        </h2>
-                        <p class="text-xs text-slate-500 mt-1">Kumpulan dokumentasi jepretan masa lalu sewaktu memakai seragam putih abu-abu di SMAN 8 Cirebon.</p>
-                    </div>
-                    <button onclick="openModal('modal-tambah-memori')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2 px-4 rounded-xl shadow-sm transition-all flex items-center justify-center gap-1.5 shrink-0">
-                        <i class="fa-solid fa-upload"></i> Unggah Foto Jadul
-                    </button>
-                </div>
+            <!-- Grid Loker & UMKM -->
+            <div id="loker-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Isi lowongan & UMKM dimuat dinamis -->
+            </div>
+        </section>
 
-                <div id="memori-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
-                    <!-- Dynamically populated from JS -->
+        <!-- VIEW 5: MEMORI NOSTALGIA -->
+        <section id="view-memori" class="tab-view hidden space-y-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">
+                        📸 Ruang Kenangan & Galeri Nostalgia
+                    </h2>
+                    <p class="text-xs text-slate-500">Unggah foto lama masa SMA (1995-1998) atau foto serunya reuni yang pernah kita gelar.</p>
                 </div>
-                
-                <!-- Empty state for Gallery -->
-                <div id="memori-empty-state" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
-                    <p class="text-3xl text-slate-300"><i class="fa-solid fa-images"></i></p>
-                    <h4 class="font-bold text-slate-700 mt-3 text-sm">Belum ada foto diunggah</h4>
-                    <p class="text-xs text-slate-400 mt-1">Jadilah yang pertama mengunggah foto nostalgia putih-abu abu Anda!</p>
-                </div>
+                <button onclick="openMemoriModal()" class="w-full md:w-auto bg-brand-blue hover:bg-brand-sky text-white font-bold px-5 py-2.5 rounded-xl text-sm transition shadow-md flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-upload"></i> Unggah Foto Nostalgia
+                </button>
+            </div>
+
+            <!-- Galeri Foto Grid -->
+            <div id="memori-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Gambar nostalgia dimuat dinamis -->
             </div>
         </section>
 
     </main>
 
-    <!-- MOBILE BOTTOM NAVIGATION (Hidden on desktop) -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-2 py-2 flex justify-around items-center z-40 md:hidden shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-        <button onclick="switchTab('beranda')" class="mobile-nav-btn flex flex-col items-center justify-center gap-1 py-1 text-slate-400 font-semibold flex-1" data-target="beranda">
-            <i class="fa-solid fa-house text-base"></i>
-            <span class="text-[9px] tracking-tight">Beranda</span>
+    <!-- FOOTER UTAMA (TERANG & BERSIH) -->
+    <footer class="bg-white border-t border-slate-200 text-center py-6 px-4 mt-auto">
+        <div class="max-w-6xl mx-auto space-y-4">
+            <!-- KONTEN HUBUNGI WA ADMIN -->
+            <div class="text-xs text-slate-600 bg-slate-50 p-3.5 rounded-2xl inline-block max-w-md mx-auto border border-slate-200 shadow-inner">
+                <span class="font-semibold text-slate-700 block mb-1.5"><i class="fa-brands fa-whatsapp text-emerald-600 mr-1"></i> Kontak Admin Hubungi WA:</span>
+                <div class="flex justify-center gap-5">
+                    <a href="https://wa.me/6285777662255" target="_blank" class="hover:text-emerald-600 text-slate-800 transition flex items-center gap-1 font-semibold">💬 Kang Cahaya</a>
+                    <a href="https://wa.me/6285220239982" target="_blank" class="hover:text-emerald-600 text-slate-800 transition flex items-center gap-1 font-semibold">💬 Kang Ujang</a>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-3 pt-1">
+                <button onclick="openConfigModal()" class="text-xs px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-full text-slate-600 hover:text-slate-800 transition flex items-center gap-1.5 font-medium shadow-sm">
+                    <i class="fa-solid fa-cloud-bolt text-brand-gold"></i> Pengaturan Database Cloud
+                </button>
+            </div>
+
+            <p class="text-[10px] text-slate-400 pt-3 border-t border-slate-100">
+                &copy; 2026 Portal Alumni SMANDELA 98 Cirebon. All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- RESPONSIVE MOBILE BOT-BAR NAVIGATION (TERANG MODERN) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 border-t border-slate-200/80 py-2.5 px-4 z-40 backdrop-blur-md flex justify-around shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        <button onclick="switchTab('beranda')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-brand-blue transition" id="mobile-tab-beranda">
+            <i class="fa-solid fa-house text-lg"></i>
+            <span class="text-[9px]">Beranda</span>
         </button>
-        <button onclick="switchTab('kabar')" class="mobile-nav-btn flex flex-col items-center justify-center gap-1 py-1 text-slate-400 font-semibold flex-1" data-target="kabar">
-            <i class="fa-solid fa-comment-dots text-base"></i>
-            <span class="text-[9px] tracking-tight">Kabar</span>
+        <button onclick="switchTab('alumni')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-brand-blue transition" id="mobile-tab-alumni">
+            <i class="fa-solid fa-users text-lg"></i>
+            <span class="text-[9px]">Direktori</span>
         </button>
-        <button onclick="switchTab('direktori')" class="mobile-nav-btn flex flex-col items-center justify-center gap-1 py-1 text-slate-400 font-semibold flex-1" data-target="direktori">
-            <i class="fa-solid fa-users text-base"></i>
-            <span class="text-[9px] tracking-tight">Alumni</span>
+        <button onclick="switchTab('status')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-brand-blue transition" id="mobile-tab-status">
+            <i class="fa-solid fa-comments text-lg"></i>
+            <span class="text-[9px]">Kabar</span>
         </button>
-        <button onclick="switchTab('loker')" class="mobile-nav-btn flex flex-col items-center justify-center gap-1 py-1 text-slate-400 font-semibold flex-1" data-target="loker">
-            <i class="fa-solid fa-store text-base"></i>
-            <span class="text-[9px] tracking-tight">Usaha</span>
+        <button onclick="switchTab('loker')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-brand-blue transition" id="mobile-tab-loker">
+            <i class="fa-solid fa-briefcase text-lg"></i>
+            <span class="text-[9px]">UMKM/Loker</span>
         </button>
-        <button onclick="switchTab('memori')" class="mobile-nav-btn flex flex-col items-center justify-center gap-1 py-1 text-slate-400 font-semibold flex-1" data-target="memori">
-            <i class="fa-solid fa-images text-base"></i>
-            <span class="text-[9px] tracking-tight">Galeri</span>
+        <button onclick="switchTab('memori')" class="flex flex-col items-center gap-1 text-slate-500 hover:text-brand-blue transition" id="mobile-tab-memori">
+            <i class="fa-solid fa-images text-lg"></i>
+            <span class="text-[9px]">Memori</span>
         </button>
     </nav>
 
-    <!-- ================= MODAL 1: REGISTRASI & EDIT DATA ================= -->
-    <div id="modal-daftar" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-            <!-- Header -->
-            <div class="megamendung-gradient text-white p-5 flex justify-between items-center shrink-0">
-                <div>
-                    <h3 class="font-bold text-lg">Gabung Database SMANDELA '98</h3>
-                    <p class="text-[10px] text-sky-200 uppercase tracking-widest mt-0.5">Pendataan Alumni SMAN 8 Angkatan 98</p>
-                </div>
-                <button onclick="closeModal('modal-daftar')" class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <!-- Form Body -->
-            <form id="form-daftar" onsubmit="handleRegisterAlumni(event)" class="p-5 md:p-6 overflow-y-auto space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nama Lengkap *</label>
-                        <input type="text" id="reg-name" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Masukkan nama asli Anda">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kelas Terakhir di SMAN 8 *</label>
-                        <select id="reg-class" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <option value="IPA 1">IPA 1</option>
-                            <option value="IPA 2">IPA 2</option>
-                            <option value="IPS 1">IPS 1</option>
-                            <option value="IPS 2">IPS 2</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Domisili Kota Saat Ini *</label>
-                        <input type="text" id="reg-city" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Cirebon, Bandung, Jakarta">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Pekerjaan / Instansi *</label>
-                        <input type="text" id="reg-job" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Guru, Pengusaha, PNS">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor WhatsApp (Aktif) *</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 text-xs font-medium pointer-events-none">+62</span>
-                            <input type="text" id="reg-wa" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl py-2 pl-12 pr-3 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="81234567xx">
-                        </div>
-                        <p class="text-[10px] text-slate-400 mt-1">Digunakan agar sesama alumni bisa langsung menghubungi Anda.</p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Link Foto Profil (Opsional)</label>
-                        <input type="url" id="reg-avatar" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="https://placehold.co/150">
-                        <p class="text-[10px] text-slate-400 mt-1">Kosongkan jika ingin memakai avatar default.</p>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Kenangan Masa Sekolah Paling Berkesan</label>
-                    <textarea id="reg-quote" rows="3" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ceritakan momen lucu, berkesan, atau pesan untuk teman-teman seangkatan..."></textarea>
-                </div>
-
-                <div class="flex items-center justify-end gap-3 pt-3 border-t shrink-0">
-                    <button type="button" onclick="closeModal('modal-daftar')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition-all">Batal</button>
-                    <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-md transition-all">Simpan Profil</button>
-                </div>
-            </form>
+    <!-- STATUS KONEKSI AWAN DI SUDUT LAYAR -->
+    <div class="fixed bottom-16 right-3 md:bottom-4 md:right-4 z-40">
+        <div id="connection-badge" class="px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all duration-300">
+            <span class="w-2 h-2 rounded-full animate-ping" id="connection-ping"></span>
+            <span id="connection-text">Memeriksa koneksi...</span>
         </div>
     </div>
 
-    <!-- ================= MODAL 2: TAMBAH LOKER / UMKM ================= -->
-    <div id="modal-tambah-loker" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-            <!-- Header -->
-            <div class="bg-emerald-600 text-white p-5 flex justify-between items-center shrink-0">
+    <!-- MODAL 1: REGISTRASI DATA ALUMNI -->
+    <div id="modal-register" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-md w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal('register')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                🎓 Pendaftaran Alumni Baru
+            </h3>
+            <form onsubmit="handleRegisterAlumni(event)" class="space-y-4">
                 <div>
-                    <h3 class="font-bold text-lg">Buat Iklan Usaha / Loker Baru</h3>
-                    <p class="text-[10px] text-emerald-200 uppercase tracking-widest mt-0.5">Saling berdaya dan berkolaborasi sesama alumni SMANDELA</p>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Nama Lengkap</label>
+                    <input type="text" id="reg-name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
                 </div>
-                <button onclick="closeModal('modal-tambah-loker')" class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <!-- Form Body -->
-            <form id="form-loker" onsubmit="handlePostLoker(event)" class="p-5 md:p-6 overflow-y-auto space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Jenis Posting *</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <label class="border-2 border-emerald-500 bg-emerald-50/20 rounded-xl p-3 flex items-center gap-2.5 cursor-pointer hover:bg-emerald-50/40 transition-all">
-                            <input type="radio" name="post-type" value="umkm" checked class="text-emerald-600 focus:ring-emerald-500">
-                            <span class="text-xs font-bold text-slate-800">Usaha / UMKM Alumni</span>
-                        </label>
-                        <label class="border border-slate-200 rounded-xl p-3 flex items-center gap-2.5 cursor-pointer hover:bg-slate-50 transition-all">
-                            <input type="radio" name="post-type" value="kerja" class="text-emerald-600 focus:ring-emerald-500">
-                            <span class="text-xs font-bold text-slate-800">Info Lowongan Kerja</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nama Usaha / Posisi Pekerjaan *</label>
-                        <input type="text" id="loker-title" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Contoh: Catering Megamendung / Staff Admin">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Pemilik Usaha / Nama Instansi *</label>
-                        <input type="text" id="loker-owner" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Nama Anda atau Perusahaan">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Lokasi Kota *</label>
-                        <input type="text" id="loker-location" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Cirebon, Jakarta, dsb">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Link WhatsApp Hubungi *</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 text-xs font-medium pointer-events-none">+62</span>
-                            <input type="text" id="loker-contact" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl py-2 pl-12 pr-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="81234567xx">
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Deskripsi Lengkap Usaha / Syarat Pekerjaan *</label>
-                    <textarea id="loker-desc" rows="4" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Jelaskan produk usaha Anda, jangkauan kirim, atau kualifikasi loker secara jelas..."></textarea>
-                </div>
-
-                <div class="flex items-center justify-end gap-3 pt-3 border-t shrink-0">
-                    <button type="button" onclick="closeModal('modal-tambah-loker')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition-all">Batal</button>
-                    <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition-all">Pasang Sekarang</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ================= MODAL 3: UNGGAH FOTO NOSTALGIA ================= -->
-    <div id="modal-tambah-memori" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-            <!-- Header -->
-            <div class="bg-blue-600 text-white p-5 flex justify-between items-center shrink-0">
-                <div>
-                    <h3 class="font-bold text-lg">Unggah Foto Nostalgia</h3>
-                    <p class="text-[10px] text-blue-200 uppercase tracking-widest mt-0.5">Bagikan kenangan putih-abu abu Anda</p>
-                </div>
-                <button onclick="closeModal('modal-tambah-memori')" class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <!-- Form Body -->
-            <form id="form-memori" onsubmit="handlePostMemory(event)" class="p-5 md:p-6 space-y-4 overflow-y-auto">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Judul / Keterangan Foto *</label>
-                    <input type="text" id="memori-title" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Lagi Praktek Fisika di Laboratorium">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Perkiraan Tahun Kejadian *</label>
-                    <select id="memori-year" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        <option value="1995">Tahun Ajaran 1995 (Kelas 1)</option>
-                        <option value="1996">Tahun Ajaran 1996 (Kelas 2)</option>
-                        <option value="1997">Tahun Ajaran 1997 (Kelas 3 awal)</option>
-                        <option value="1998">Tahun Ajaran 1998 (Lulus / Kelulusan)</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Pilih Foto (File Gambar) *</label>
-                    <input type="file" id="memori-file" accept="image/*" required onchange="compressAndPreviewImage(event)" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                    <p class="text-[10px] text-slate-400 mt-1">Foto akan dikompresi otomatis agar hemat kuota dan penyimpanan database cloud.</p>
-                    <div id="upload-preview-container" class="mt-2.5 hidden">
-                        <p class="text-[10px] font-bold text-slate-500 uppercase">Pratinjau Hasil Kompresi:</p>
-                        <img id="upload-preview" src="" class="mt-1.5 max-h-36 w-full object-contain rounded-xl border border-slate-100 bg-slate-50">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Diupload Oleh (Nama Anda) *</label>
-                    <input type="text" id="memori-author" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Ahmad / Rina">
-                </div>
-
-                <div class="flex items-center justify-end gap-3 pt-3 border-t">
-                    <button type="button" onclick="closeModal('modal-tambah-memori')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition-all">Batal</button>
-                    <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-md transition-all">Unggah Foto</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ================= MODAL 4: TAMBAH AGENDA REUNI ================= -->
-    <div id="modal-tambah-agenda" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-slate-100">
-            <!-- Header -->
-            <div class="megamendung-gradient text-white p-5 flex justify-between items-center shrink-0">
-                <div>
-                    <h3 class="font-bold text-lg">Tambah Agenda Reuni Baru</h3>
-                    <p class="text-[10px] text-sky-200 uppercase mt-0.5">Buat jadwal agenda kegiatan reuni SMANDELA 98</p>
-                </div>
-                <button onclick="closeModal('modal-tambah-agenda')" class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <!-- Form Body -->
-            <form id="form-agenda" onsubmit="handlePostAgenda(event)" class="p-5 md:p-6 space-y-4 overflow-y-auto">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Nama Kegiatan / Agenda *</label>
-                    <input type="text" id="agenda-title" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Reuni Perak & Halal Bihalal">
-                </div>
-
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Kategori *</label>
-                        <select id="agenda-category" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <option value="Silaturahmi">Silaturahmi</option>
-                            <option value="Sosial">Bakti Sosial</option>
-                            <option value="Rapat">Rapat Panitia</option>
-                            <option value="Olahraga">Olahraga Bersama</option>
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Pilih Kelas</label>
+                        <select id="reg-class" required class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                            <option value="IPA 1">IPA 1</option>
+                            <option value="IPA 2">IPA 2</option>
+                            <option value="IPA 3">IPA 3</option>
+                            <option value="IPS 1">IPS 1</option>
+                            <option value="IPS 2">IPS 2</option>
+                            <option value="IPS 3">IPS 3</option>
                             <option value="Lainnya">Lainnya</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Tanggal Kegiatan *</label>
-                        <input type="date" id="agenda-date" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Kota Tinggal Sekarang</label>
+                        <input type="text" id="reg-city" required placeholder="Contoh: Cirebon" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
                     </div>
                 </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Waktu / Jam *</label>
-                        <input type="text" id="agenda-time" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: 10:00 WIB">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Lokasi Tempat *</label>
-                        <input type="text" id="agenda-location" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Swiss-Belhotel Cirebon">
-                    </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Pekerjaan / Bisnis</label>
+                    <input type="text" id="reg-job" required placeholder="Contoh: Pegawai Negeri, Pengusaha" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
                 </div>
-
-                <div class="flex items-center justify-end gap-3 pt-3 border-t">
-                    <button type="button" onclick="closeModal('modal-tambah-agenda')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition-all">Batal</button>
-                    <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-md transition-all">Buat Agenda</button>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Nomor WhatsApp Aktif</label>
+                    <input type="tel" id="reg-wa" required placeholder="Contoh: 08123456789" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
                 </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Foto Profil (Kompres Otomatis)</label>
+                    <input type="file" id="reg-avatar" accept="image/*" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-600 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Slogan / Kutipan Favorit (Quote)</label>
+                    <textarea id="reg-quote" rows="2" placeholder="Tulis sepatah kata kenangan..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white resize-none transition-all"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-brand-blue hover:bg-brand-sky text-white font-bold py-2.5 rounded-xl text-sm transition shadow-md">
+                    Simpan Data & Verifikasi
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- ================= MODAL 5: PENGATURAN DATABASE CLOUD ================= -->
-    <div id="modal-db-settings" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-slate-100">
-            <div class="megamendung-gradient text-white p-5 flex justify-between items-center">
+    <!-- MODAL 2: TAMBAH AGENDA REUNI -->
+    <div id="modal-agenda" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeModal('agenda')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                📅 Buat Agenda Reuni / Kegiatan Baru
+            </h3>
+            <form onsubmit="handleCreateAgenda(event)" class="space-y-4">
                 <div>
-                    <h3 class="font-bold text-base flex items-center gap-1.5"><i class="fa-solid fa-cloud"></i> Pengaturan Database Cloud</h3>
-                    <p class="text-[10px] text-sky-200 uppercase mt-0.5">Sambungkan ke Google Sheets API</p>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Nama Kegiatan</label>
+                    <input type="text" id="agenda-title" required placeholder="Contoh: Rapat Reuni Akbar I" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
                 </div>
-                <button onclick="closeModal('modal-db-settings')" class="p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="p-5 space-y-4">
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    Tempelkan URL Google Apps Script hasil publikasi Web App Anda untuk memindahkan penyimpanan dari lokal browser ke Google Sheets online.
-                </p>
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1.5">URL Google Apps Script</label>
-                    <input type="url" id="db-api-url" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="https://script.google.com/macros/s/.../exec">
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Kategori</label>
+                    <select id="agenda-category" required class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                        <option value="Rapat Koordinasi">Rapat Koordinasi</option>
+                        <option value="Silaturahmi / Arisan">Silaturahmi / Arisan</option>
+                        <option value="Aksi Sosial">Aksi Sosial</option>
+                        <option value="Acara Puncak">Acara Puncak</option>
+                    </select>
                 </div>
-                <div class="flex items-center justify-end gap-2.5 pt-2 border-t">
-                    <button type="button" onclick="closeModal('modal-db-settings')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Batal</button>
-                    <button type="button" onclick="saveDatabaseConfig()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Simpan & Hubungkan</button>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Hari / Tanggal</label>
+                        <input type="text" id="agenda-date" required placeholder="Contoh: Sabtu, 15 Agt 2026" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Waktu / Jam</label>
+                        <input type="text" id="agenda-time" required placeholder="Contoh: 09:00 WIB" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Tempat / Lokasi</label>
+                    <input type="text" id="agenda-location" required placeholder="Contoh: RM Empal Gentong Krucuk" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                </div>
+                <button type="submit" class="w-full bg-brand-blue hover:bg-brand-sky text-white font-bold py-2.5 rounded-xl text-sm transition shadow-md">
+                    Terbitkan Agenda
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: TAMBAH BURSA KERJA & UMKM -->
+    <div id="modal-loker" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeModal('loker')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                💼 Promosi Usaha / Lowongan Kerja
+            </h3>
+            <form onsubmit="handleCreateLoker(event)" class="space-y-4">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Tipe Postingan</label>
+                        <select id="loker-type" required class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                            <option value="UMKM / Usaha">UMKM / Usaha Alumni</option>
+                            <option value="Lowongan Kerja">Lowongan Kerja (Loker)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Nama Pemilik / Alumni</label>
+                        <input type="text" id="loker-owner" required placeholder="Nama Anda" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Nama Usaha / Jabatan Loker</label>
+                    <input type="text" id="loker-title" required placeholder="Contoh: Seblak Megamendung, Admin Toko" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Lokasi Wilayah</label>
+                        <input type="text" id="loker-location" required placeholder="Contoh: Krucuk, Cirebon" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Kontak WhatsApp Hubungi</label>
+                        <input type="tel" id="loker-contact" required placeholder="Contoh: 0812345" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Deskripsi Singkat Usaha / Persyaratan Loker</label>
+                    <textarea id="loker-desc" rows="3" required placeholder="Rincian informasi produk, harga, atau syarat lamaran..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white resize-none transition-all"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-brand-blue hover:bg-brand-sky text-white font-bold py-2.5 rounded-xl text-sm transition shadow-md">
+                    Pasang Sekarang
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 4: UNGGAH FOTO NOSTALGIA -->
+    <div id="modal-memori" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeModal('memori')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                📸 Unggah Foto Kenangan Baru
+            </h3>
+            <form onsubmit="handleCreateMemori(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Judul Foto Kenangan</label>
+                    <input type="text" id="memori-title" required placeholder="Contoh: Kelas 2 Fisika SMA 8" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Tahun Kejadian</label>
+                        <input type="number" id="memori-year" required placeholder="Contoh: 1997" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 mb-1 font-semibold">Nama Pengunggah</label>
+                        <input type="text" id="memori-author" required placeholder="Nama Anda" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">Pilih Berkas Foto Lokal (Hemat Kuota)</label>
+                    <input type="file" id="memori-file" accept="image/*" required class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-600 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                </div>
+                <button type="submit" class="w-full bg-brand-blue hover:bg-brand-sky text-white font-bold py-2.5 rounded-xl text-sm transition shadow flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Kompres & Unggah Memori
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 5: PENGATURAN DATABASE CLOUD -->
+    <div id="modal-config" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeModal('config')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+                ⚙️ Pengaturan Cloud Database
+            </h3>
+            <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                Gunakan Google Spreadsheet Anda sendiri agar seluruh HP dan Laptop alumni sinkron terupdate di mana saja.
+            </p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1 font-semibold">URL Web App Google Apps Script</label>
+                    <input type="url" id="config-sheets-url" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:bg-white transition-all">
+                </div>
+                <div class="flex gap-2.5">
+                    <button onclick="saveConfig()" class="flex-grow bg-brand-blue hover:bg-brand-sky text-white font-bold py-2.5 rounded-xl text-sm transition shadow-md">
+                        Simpan & Hubungkan
+                    </button>
+                    <button onclick="disconnectConfig()" class="bg-red-500/10 hover:bg-red-500/20 text-red-600 border border-red-500/10 px-4 py-2.5 rounded-xl text-sm transition">
+                        Gunakan Offline
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER & RESET DATABASE -->
-    <footer class="bg-gray-950 text-gray-400 text-center py-6 text-xs border-t border-gray-800 space-y-3 relative">
-        <p>&copy; 2026 Ikatan Alumni SMA Negeri 8 Cirebon Angkatan 1998 (SMANDELA). Ditulis dengan ❤️ untuk seluruh angkatan.</p>
-        <div class="flex justify-center flex-wrap gap-4 text-[10px]">
-            <button onclick="openModal('modal-db-settings')" class="text-blue-400 hover:text-blue-300 font-semibold transition-all">
-                <i class="fa-solid fa-gears mr-1"></i> ⚙️ Pengaturan Database Cloud
-            </button>
-            <button onclick="clearAllData()" class="text-rose-400 hover:text-rose-300 font-semibold transition-all">
-                <i class="fa-solid fa-trash-can mr-1"></i> Reset & Bersihkan Data Demo
-            </button>
-        </div>
-        
-        <!-- Live Connection Status Badge Indicator -->
-        <div class="fixed bottom-20 md:bottom-4 right-4 z-40">
-            <span id="connection-status-badge" class="px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-slate-800 text-slate-300 border border-slate-700">
-                <span class="w-2 h-2 rounded-full bg-slate-400 animate-pulse"></span> Mengecek Koneksi...
-            </span>
-        </div>
-    </footer>
+    <!-- NOTIFIKASI POPUP KUSTOM -->
+    <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 bg-white border border-slate-200 text-slate-800 text-xs px-5 py-3 rounded-full shadow-2xl z-50 flex items-center gap-2 transition-all duration-300 translate-y-[-100px] opacity-0">
+        <span id="toast-icon">✨</span>
+        <span id="toast-text">Notifikasi berhasil diproses!</span>
+    </div>
 
-    <!-- ================= JAVASCRIPT LOGIC & STATE CONTROLLER ================= -->
+    <!-- JAVASCRIPT LOGIC & STATE ENGINE -->
     <script>
-        // Clean default production arrays
-        const defaultAlumni = [];
-        const defaultLoker = [];
-        const defaultMemori = [];
-        const defaultStatus = [];
-        const defaultAgenda = [];
-
-        // Core App State (Initialise with memory or default)
-        let alumniState = [];
-        let lokerState = [];
-        let memoriState = [];
-        let statusState = [];
-        let agendaState = [];
-        let currentLokerSubTab = 'umkm';
-        
-        let compressedImageBase64 = "";
-
-        // Compress image using client-side canvas to save cloud quota
-        function compressAndPreviewImage(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 500; // Resizes image dimensions down to 500px width
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    // High compression (0.5 quality) outputs super small image payload (~15-25KB)
-                    compressedImageBase64 = canvas.toDataURL('image/jpeg', 0.5);
-
-                    // Set preview element src and display container
-                    document.getElementById('upload-preview').src = compressedImageBase64;
-                    document.getElementById('upload-preview-container').classList.remove('hidden');
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // PENTING: Silakan ganti teks di bawah ini dengan URL Google Apps Script Anda agar semua HP otomatis online!
+        // SINKRONISASI UTAMA: Tempelkan kembali URL Google Apps Script Anda di sini agar HP alumni lain langsung terhubung otomatis
         let googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbx6CisbmRpOVZVvmmlmWf_JCYPCDO_Gqhhbi19za08HYlQRXjCHWlQqvdf8WAeykglbUQ/exec';
-        
-        // Pengaman jika URL belum diganti di kode, sistem akan mencari di penyimpanan lokal
-        if (googleSheetsUrl.includes('SILAKAN_TEMPEL_URL') || !googleSheetsUrl) {
-            googleSheetsUrl = localStorage.getItem('smandela98_sheets_url') || '';
-        }
 
-        // On Application Load
-        window.onload = function() {
-            // Set default active tab
-            switchTab('beranda');
-            
-            // Start Countdown Reuni
-            initCountdown();
-
-            // Load all database contents based on active connection mode
-            initializeDataEngine();
+        // State Penyimpanan Lokal (Driver Cadangan)
+        let state = {
+            alumni: [],
+            status: [],
+            komentar: [],
+            loker: [],
+            memori: [],
+            agenda: []
         };
 
-        // Initialize Data Engine based on dynamic API config
-        async function initializeDataEngine() {
-            const badge = document.getElementById('connection-status-badge');
-            
-            if (googleSheetsUrl && googleSheetsUrl.trim() !== '' && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
-                // Show Connecting State
-                badge.className = "px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-blue-900 text-blue-200 border border-blue-700";
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-blue-400 animate-spin border-t-transparent border-2"></span> Menghubungkan ke Cloud...`;
-                
-                try {
-                    await fetchAllFromCloud();
-                    
-                    badge.className = "px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-emerald-950 text-emerald-300 border border-emerald-800";
-                    badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ☁️ Mode Online (Google Sheets)`;
-                    showToast('Database online berhasil disinkronkan!', 'success');
-                } catch (error) {
-                    console.error('Koneksi database gagal:', error);
-                    badge.className = "px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-amber-950 text-amber-300 border border-amber-800";
-                    badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span> ⚠️ Cloud Bermasalah (Mode Offline)`;
-                    showToast('Gagal memuat database cloud. Berjalan dalam mode offline.', 'info');
-                    loadLocalFallback();
-                }
-            } else {
-                // Standalone local offline mode
-                badge.className = "px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-slate-900 text-slate-300 border border-slate-800";
-                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-slate-400 animate-pulse"></span> 📱 Mode Offline (Penyimpanan Lokal)`;
-                loadLocalFallback();
-            }
-
-            // Populate filters and render views
-            populateCityFilter();
-            renderAlumni();
-            renderLoker();
-            renderMemori();
-            renderStatus();
-            renderAgenda();
-            updateStats();
+        // Membaca URL tersimpan di browser jika ada
+        const savedUrl = localStorage.getItem('smandela_sheets_url');
+        if (savedUrl) {
+            googleSheetsUrl = savedUrl;
         }
 
-        // Save Database API Config
-        function saveDatabaseConfig() {
-            const urlInput = document.getElementById('db-api-url').value.trim();
-            localStorage.setItem('smandela98_sheets_url', urlInput);
-            googleSheetsUrl = urlInput;
-            closeModal('modal-db-settings');
-            initializeDataEngine();
-        }
-
-        // Fill data from Local Fallbacks
-        function loadLocalFallback() {
-            alumniState = JSON.parse(localStorage.getItem('smandela98_alumni')) || defaultAlumni;
-            lokerState = JSON.parse(localStorage.getItem('smandela98_loker')) || defaultLoker;
-            memoriState = JSON.parse(localStorage.getItem('smandela98_memori')) || defaultMemori;
-            statusState = JSON.parse(localStorage.getItem('smandela98_status')) || defaultStatus;
-            agendaState = JSON.parse(localStorage.getItem('smandela98_agenda')) || defaultAgenda;
-            
-            // Set input value if exists
-            document.getElementById('db-api-url').value = googleSheetsUrl;
-        }
-
-        // Fetch all tables from Google Sheets API Web App
-        async function fetchAllFromCloud() {
-            // Helper function to fetch single sheet API
-            const getSheetData = async (sheetName) => {
+        // INVENTARISASI DATA SINKRONISASI
+        async function fetchCloudData(sheetName) {
+            if (!isOnlineMode()) return null;
+            try {
                 const response = await fetch(`${googleSheetsUrl}?sheet=${sheetName}&action=read`);
                 const result = await response.json();
                 if (result.status === "success") {
                     return result.data;
-                } else {
-                    throw new Error(result.message);
                 }
-            };
-
-            // Fetch concurrently
-            const [alumni, status, komentar, loker, memori, agenda] = await Promise.all([
-                getSheetData('Alumni'),
-                getSheetData('Status'),
-                getSheetData('Komentar'),
-                getSheetData('Loker'),
-                getSheetData('Memori'),
-                getSheetData('Agenda').catch(() => []) // Handle gracefully if sheet doesn't exist yet
-            ]);
-
-            // Map and assemble Status Comments structure
-            status.forEach(st => {
-                st.comments = komentar.filter(k => k.statusId == st.id);
-            });
-
-            // Update local memory states with cloud data sorted newest first
-            alumniState = alumni.reverse();
-            statusState = status.reverse();
-            lokerState = loker.reverse();
-            memoriState = memori.reverse();
-            agendaState = agenda ? agenda.reverse() : [];
-            
-            document.getElementById('db-api-url').value = googleSheetsUrl;
+                return null;
+            } catch (err) {
+                console.error("Gagal membaca cloud data:", err);
+                return null;
+            }
         }
 
-        // Helper function to Post content data to Google Sheets API
-        async function writeToCloud(sheetName, action, dataPayload) {
-            if (!googleSheetsUrl || googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) return false;
-            
-            const payload = {
-                sheet: sheetName,
-                action: action,
-                data: dataPayload
-            };
-
+        async function postCloudData(sheetName, actionType, payload) {
+            if (!isOnlineMode()) return false;
             try {
                 const response = await fetch(googleSheetsUrl, {
                     method: 'POST',
-                    mode: 'no-cors', // standard workaround for apps script CORS block
+                    mode: 'no-cors', // Mencegah pemblokiran CORS pada Apps Script redirect
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        sheet: sheetName,
+                        action: actionType,
+                        data: payload
+                    })
                 });
                 return true;
-            } catch (error) {
-                console.error('Error posting data to cloud:', error);
+            } catch (err) {
+                console.error("Gagal mengirim cloud data:", err);
                 return false;
             }
         }
 
-        // Saving State changes locally as a redundant backup
-        function saveStateLocally() {
-            localStorage.setItem('smandela98_alumni', JSON.stringify(alumniState));
-            localStorage.setItem('smandela98_loker', JSON.stringify(lokerState));
-            localStorage.setItem('smandela98_memori', JSON.stringify(memoriState));
-            localStorage.setItem('smandela98_status', JSON.stringify(statusState));
-            localStorage.setItem('smandela98_agenda', JSON.stringify(agendaState));
-            updateStats();
+        function isOnlineMode() {
+            return (googleSheetsUrl && googleSheetsUrl.includes('script.google.com'));
         }
 
-        // Custom confirm helper instead of native confirm()
-        function showCustomConfirm(message, callback) {
-            const modal = document.getElementById('custom-confirm-modal');
-            const text = document.getElementById('confirm-modal-text');
-            const cancelBtn = document.getElementById('confirm-btn-cancel');
-            const proceedBtn = document.getElementById('confirm-btn-proceed');
+        // MEMORI UTAMA & AUTOLOAD ENGINE
+        async function initDatabase() {
+            updateConnectionBadge();
 
-            text.innerText = message;
-            modal.classList.remove('hidden');
+            if (isOnlineMode()) {
+                showToast("🔄 Menyinkronkan data dengan cloud...", "☁️");
+                
+                const cloudAlumni = await fetchCloudData('Alumni');
+                const cloudStatus = await fetchCloudData('Status');
+                const cloudKomentar = await fetchCloudData('Komentar');
+                const cloudLoker = await fetchCloudData('Loker');
+                const cloudMemori = await fetchCloudData('Memori');
+                const cloudAgenda = await fetchCloudData('Agenda');
 
-            const handleCancel = () => {
-                modal.classList.add('hidden');
-                cleanupListeners();
-            };
+                if (cloudAlumni) state.alumni = cloudAlumni;
+                if (cloudStatus) state.status = cloudStatus;
+                if (cloudKomentar) state.komentar = cloudKomentar;
+                if (cloudLoker) state.loker = cloudLoker;
+                if (cloudMemori) state.memori = cloudMemori;
+                if (cloudAgenda) state.agenda = cloudAgenda;
 
-            const handleProceed = () => {
-                modal.classList.add('hidden');
-                cleanupListeners();
-                callback();
-            };
-
-            const cleanupListeners = () => {
-                cancelBtn.removeEventListener('click', handleCancel);
-                proceedBtn.removeEventListener('click', handleProceed);
-            };
-
-            cancelBtn.addEventListener('click', handleCancel);
-            proceedBtn.addEventListener('click', handleProceed);
-        }
-
-        // Display Toast Alerts
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const title = document.getElementById('toast-title');
-            const msg = document.getElementById('toast-message');
-            
-            if (type === 'success') {
-                toast.classList.replace('bg-rose-600', 'bg-emerald-600');
-                title.innerText = 'BERHASIL';
-            } else if (type === 'info') {
-                toast.classList.replace('bg-emerald-600', 'bg-blue-600');
-                toast.classList.replace('bg-rose-600', 'bg-blue-600');
-                title.innerText = 'INFO';
+                // Sinkronkan ke local storage juga sebagai cadangan offline
+                localStorage.setItem('smandela_state', JSON.stringify(state));
             } else {
-                toast.classList.replace('bg-emerald-600', 'bg-rose-600');
-                title.innerText = 'INFORMASI';
+                // Membaca penyimpanan offline
+                const localData = localStorage.getItem('smandela_state');
+                if (localData) {
+                    state = JSON.parse(localData);
+                } else {
+                    // Kosongkan agar pengguna murni mengisi sendiri
+                    state = { alumni: [], status: [], komentar: [], loker: [], memori: [], agenda: [] };
+                }
             }
+
+            renderAll();
+        }
+
+        // FUNGSI KOMPRESI GAMBAR LOKAL
+        function compressImage(file, callback) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(event) {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 400; // Ukuran mikro untuk menghemat penyimpanan
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    
+                    // Kompresi kualitas gambar ke 60%
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                    callback(compressedBase64);
+                };
+            };
+        }
+
+        // FUNGSI KOMPRESI FOTO PROFIL (SQUARE CROP 150x150)
+        function compressAvatar(file, callback) {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(event) {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const size = 150; // Sangat pas untuk avatar kecil & hemat memori
+                    canvas.width = size;
+                    canvas.height = size;
+                    const ctx = canvas.getContext('2d');
+                    
+                    let srcX = 0, srcY = 0, srcSize = Math.min(img.width, img.height);
+                    if (img.width > img.height) {
+                        srcX = (img.width - img.height) / 2;
+                    } else {
+                        srcY = (img.height - img.width) / 2;
+                    }
+                    ctx.drawImage(img, srcX, srcY, srcSize, srcSize, 0, 0, size, size);
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.5); // Kualitas 50% untuk ukuran file super kecil (~5KB)
+                    callback(compressedBase64);
+                };
+            };
+        }
+
+        function compressAvatarPromise(file) {
+            return new Promise((resolve) => {
+                compressAvatar(file, (base64) => {
+                    resolve(base64);
+                });
+            });
+        }
+
+        // RENDERING VIEW 2: DIREKTORI ALUMNI
+        function renderAlumniList() {
+            const grid = document.getElementById('alumni-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            if (state.alumni.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full bg-white border border-slate-200/60 p-8 rounded-2xl text-center text-slate-500 shadow-sm">
+                        <i class="fa-solid fa-user-slash text-4xl mb-2 text-slate-300 animate-pulse"></i>
+                        <p class="text-sm font-semibold">Direktori Alumni Masih Kosong</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Jadilah yang pertama menambahkan data alumni SMANDELA 98!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const searchName = document.getElementById('search-name').value.toLowerCase();
+            const filterClass = document.getElementById('filter-class').value;
+            const searchCity = document.getElementById('search-city').value.toLowerCase();
+
+            state.alumni.forEach(alumnus => {
+                if (alumnus.name.toLowerCase().includes(searchName) &&
+                    (filterClass === '' || alumnus.class === filterClass) &&
+                    (alumnus.city.toLowerCase().includes(searchCity))) {
+                    
+                    grid.innerHTML += `
+                        <div class="bg-white border border-slate-200/60 rounded-2xl p-5 hover:border-slate-300 hover:shadow-md transition-all shadow-sm flex flex-col justify-between">
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    ${alumnus.avatar ? `
+                                        <img src="${alumnus.avatar}" alt="${alumnus.name}" class="w-11 h-11 rounded-full object-cover border border-slate-200/60 shadow-sm">
+                                    ` : `
+                                        <div class="w-11 h-11 bg-brand-accent text-brand-sky rounded-full flex items-center justify-center font-bold text-lg border border-slate-200/40">
+                                            ${alumnus.name.charAt(0).toUpperCase()}
+                                        </div>
+                                    `}
+                                    <div>
+                                        <h4 class="text-sm font-bold text-slate-800">${alumnus.name}</h4>
+                                        <p class="text-[10px] text-brand-gold font-semibold"><i class="fa-solid fa-graduation-cap mr-1"></i>Kelas ${alumnus.class}</p>
+                                    </div>
+                                </div>
+                                <hr class="border-slate-100">
+                                <div class="space-y-1.5 text-xs text-slate-600">
+                                    <div class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-slate-400 w-4"></i> ${alumnus.city}</div>
+                                    <div class="flex items-center gap-2"><i class="fa-solid fa-briefcase text-slate-400 w-4"></i> ${alumnus.job}</div>
+                                </div>
+                                <p class="text-xs text-slate-500 italic bg-slate-50 p-2.5 rounded-xl border border-slate-100 font-light">
+                                    "${alumnus.quote || 'Semoga sukses selalu rekan-rekan SMANDELA!'}"
+                                </p>
+                            </div>
+                            <div class="pt-4">
+                                <a href="https://wa.me/62${alumnus.wa.startsWith('0') ? alumnus.wa.slice(1) : alumnus.wa}" target="_blank" class="w-full py-2 bg-emerald-50 hover:bg-emerald-100/80 text-emerald-600 border border-emerald-200/60 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                                    <i class="fa-brands fa-whatsapp text-sm"></i> Kirim Pesan WA
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function filterAlumni() {
+            renderAlumniList();
+        }
+
+        // RENDERING VIEW 3: KABAR STATUS & KOMENTAR
+        function renderTimeline() {
+            const container = document.getElementById('timeline-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (state.status.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white border border-slate-200/60 p-8 rounded-2xl text-center text-slate-500 shadow-sm">
+                        <i class="fa-solid fa-comments text-4xl mb-2 text-slate-300 animate-pulse"></i>
+                        <p class="text-sm font-semibold">Belum Ada Kabar Status Terbaru</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Bagikan status pertama untuk menyapa seluruh alumni SMANDELA 98!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Urutkan status terbaru di bagian teratas
+            const sortedStatus = [...state.status].reverse();
+
+            sortedStatus.forEach(post => {
+                // Cari komentar yang terkait status ini
+                const commentsForPost = state.komentar.filter(c => c.statusId === post.id);
+
+                let commentsHtml = '';
+                commentsForPost.forEach(comment => {
+                    commentsHtml += `
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-slate-700">${comment.author} <span class="text-[9px] text-brand-gold font-normal">(Kelas ${comment.class})</span></span>
+                                <span class="text-[9px] text-slate-400">${comment.timestamp}</span>
+                            </div>
+                            <p class="text-slate-600 leading-relaxed">${comment.content}</p>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="bg-white border border-slate-200/60 p-5 rounded-2xl shadow-sm space-y-4">
+                        <!-- Kepala Postingan -->
+                        <div class="flex justify-between items-start">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-brand-accent text-brand-sky rounded-full flex items-center justify-center font-bold border border-slate-200/40">
+                                    ${post.author.charAt(0).toUpperCase()}
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-800">${post.author}</h4>
+                                    <p class="text-[9px] text-brand-gold font-semibold"><i class="fa-solid fa-graduation-cap mr-1"></i>Kelas ${post.class}</p>
+                                </div>
+                            </div>
+                            <span class="text-[9px] text-slate-400">${post.timestamp}</span>
+                        </div>
+
+                        <!-- Isi Postingan -->
+                        <p class="text-xs text-slate-700 leading-relaxed font-normal">
+                            ${post.content}
+                        </p>
+
+                        <!-- Panel Suka (Like) -->
+                        <div class="flex items-center gap-4 pt-1 text-slate-500 border-t border-slate-100 text-xs">
+                            <button onclick="handleLikePost('${post.id}')" class="hover:text-rose-600 transition flex items-center gap-1 font-semibold">
+                                <i class="fa-solid fa-heart text-rose-500 animate-pulse"></i> Suka (${post.likes || 0})
+                            </button>
+                            <span class="flex items-center gap-1 text-slate-400"><i class="fa-regular fa-comment"></i> Komentar (${commentsForPost.length})</span>
+                        </div>
+
+                        <!-- Panel Daftar Komentar -->
+                        <div class="space-y-2 pt-1 border-t border-slate-100">
+                            ${commentsHtml !== '' ? `<div class="space-y-2 max-h-48 overflow-y-auto pr-1">${commentsHtml}</div>` : '<p class="text-[10px] text-slate-400 italic">Belum ada komentar...</p>'}
+                            
+                            <!-- Form Balas Komentar -->
+                            <form onsubmit="handleCreateComment(event, '${post.id}')" class="mt-3 grid grid-cols-1 gap-2 pt-2 border-t border-slate-100">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="text" placeholder="Nama Anda" required class="comment-author bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-[10px] text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-blue focus:bg-white transition-all">
+                                    <select required class="comment-class bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-[10px] text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-blue focus:bg-white transition-all">
+                                        <option value="" disabled selected>Pilih Kelas</option>
+                                        <option value="IPA 1">IPA 1</option>
+                                        <option value="IPA 2">IPA 2</option>
+                                        <option value="IPA 3">IPA 3</option>
+                                        <option value="IPS 1">IPS 1</option>
+                                        <option value="IPS 2">IPS 2</option>
+                                        <option value="IPS 3">IPS 3</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="text" placeholder="Tulis tanggapan atau pesan Anda..." required class="comment-content flex-grow bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-[10px] text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-blue focus:bg-white transition-all">
+                                    <button type="submit" class="bg-brand-blue hover:bg-brand-sky text-white px-3 py-1.5 rounded-lg text-[10px] font-bold transition flex items-center gap-1 shadow-sm">
+                                        <i class="fa-solid fa-reply"></i> Balas
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // RENDERING VIEW 4: BURSA KERJA & UMKM
+        function renderLoker() {
+            const grid = document.getElementById('loker-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            if (state.loker.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full bg-white border border-slate-200/60 p-8 rounded-2xl text-center text-slate-500 shadow-sm">
+                        <i class="fa-solid fa-folder-open text-4xl mb-2 text-slate-300 animate-pulse"></i>
+                        <p class="text-sm font-semibold">Belum Ada Informasi Loker atau UMKM</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Bagikan usahamu sekarang agar sesama alumni bisa mampir dan berlangganan!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            state.loker.forEach(item => {
+                const isLoker = item.type === "Lowongan Kerja";
+                grid.innerHTML += `
+                    <div class="bg-white border border-slate-200/60 p-5 rounded-2xl hover:border-slate-300 hover:shadow-md transition-all flex flex-col justify-between shadow-sm">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-start">
+                                <span class="text-[9px] font-bold px-2.5 py-1 rounded-full ${isLoker ? 'bg-indigo-50 text-indigo-600 border border-indigo-100' : 'bg-amber-50 text-amber-600 border border-amber-100'}">
+                                    <i class="${isLoker ? 'fa-solid fa-briefcase' : 'fa-solid fa-store'} mr-1"></i>${item.type}
+                                </span>
+                                <span class="text-[8px] text-slate-400">${item.timestamp ? item.timestamp.split(',')[0] : ''}</span>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-800 leading-snug">${item.title}</h3>
+                                <p class="text-[10px] text-slate-500 font-medium mt-1">Diposting oleh: ${item.owner}</p>
+                            </div>
+                            <p class="text-xs text-slate-600 font-normal leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                ${item.desc}
+                            </p>
+                            <div class="flex items-center gap-1 text-[11px] text-slate-500">
+                                <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i> ${item.location}
+                            </div>
+                        </div>
+                        <div class="pt-4">
+                            <a href="https://wa.me/62${item.contact.startsWith('0') ? item.contact.slice(1) : item.contact}" target="_blank" class="w-full py-2 bg-brand-blue hover:bg-brand-sky text-white border border-slate-100 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> Hubungi Kontak
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // RENDERING VIEW 5: MEMORI NOSTALGIA & FOTO KILAT BERANDA
+        function renderMemori() {
+            const grid = document.getElementById('memori-grid');
+            const homeGrid = document.getElementById('home-nostalgia-grid');
+            if (grid) grid.innerHTML = '';
+            if (homeGrid) homeGrid.innerHTML = '';
+
+            if (state.memori.length === 0) {
+                if (grid) {
+                    grid.innerHTML = `
+                        <div class="col-span-full bg-white border border-slate-200/60 p-8 rounded-2xl text-center text-slate-500 shadow-sm">
+                            <i class="fa-solid fa-images text-4xl mb-2 text-slate-300 animate-pulse"></i>
+                            <p class="text-sm font-semibold">Galeri Nostalgia Masih Kosong</p>
+                            <p class="text-[10px] text-slate-400 mt-1">Unggah berkas foto jadul Anda semasa sekolah dulu.</p>
+                        </div>
+                    `;
+                }
+                if (homeGrid) {
+                    homeGrid.innerHTML = `
+                        <div class="col-span-full py-4 text-center text-slate-400 text-[11px]">
+                            Belum ada foto nostalgia.
+                        </div>
+                    `;
+                }
+                return;
+            }
+
+            // Memuat galeri kenangan secara terbalik (terbaru dulu)
+            const reverseMemori = [...state.memori].reverse();
+
+            reverseMemori.forEach(item => {
+                if (grid) {
+                    grid.innerHTML += `
+                        <div class="bg-white p-3 rounded-2xl border border-slate-200/60 hover:border-slate-300 transition-all flex flex-col justify-between overflow-hidden shadow-sm">
+                            <div class="relative group aspect-[4/3] rounded-xl overflow-hidden bg-slate-50 border border-slate-100 mb-2.5">
+                                <img src="${item.url}" alt="${item.title}" class="w-full h-full object-cover transition duration-300 group-hover:scale-105" onerror="this.src='https://placehold.co/400x300/f1f5f9/94a3b8?text=Gagal+Memuat+Foto'">
+                                <span class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-sm text-[9px] font-bold text-brand-gold px-2 py-0.5 rounded-full border border-brand-gold/20">
+                                    <i class="fa-solid fa-calendar mr-1"></i>${item.year}
+                                </span>
+                            </div>
+                            <div class="px-1 space-y-1">
+                                <h4 class="text-xs font-bold text-slate-800 truncate leading-tight">${item.title}</h4>
+                                <p class="text-[9px] text-slate-500">Kiriman: ${item.author}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            // Memuat 4 foto nostalgia kilat di halaman Beranda
+            if (homeGrid) {
+                const top4Memori = reverseMemori.slice(0, 4);
+                top4Memori.forEach(item => {
+                    homeGrid.innerHTML += `
+                        <div class="relative group aspect-square rounded-xl overflow-hidden bg-slate-100 border border-slate-200/50 shadow-sm" title="${item.title} (${item.year})">
+                            <img src="${item.url}" alt="${item.title}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/f1f5f9/94a3b8?text=Error'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-200 flex flex-col justify-end p-2">
+                                <p class="text-[9px] font-bold text-white truncate">${item.title}</p>
+                                <p class="text-[7px] text-slate-300">Tahun ${item.year}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                // Mengisi sisa slot foto di beranda jika kurang dari 4
+                if (top4Memori.length < 4) {
+                    for (let i = top4Memori.length; i < 4; i++) {
+                        homeGrid.innerHTML += `
+                            <div class="aspect-square rounded-xl bg-slate-50 border border-slate-200/60 border-dashed flex items-center justify-center">
+                                <i class="fa-solid fa-image-portrait text-slate-300 text-lg"></i>
+                            </div>
+                        `;
+                    }
+                }
+            }
+        }
+
+        // RENDERING VIEW: AGENDA REUNI DINAMIS
+        function renderAgenda() {
+            const container = document.getElementById('agenda-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (state.agenda.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white border border-slate-200/60 p-6 rounded-2xl text-center text-slate-500 shadow-sm">
+                        <i class="fa-solid fa-calendar-xmark text-3xl mb-2 text-slate-300"></i>
+                        <p class="text-xs font-semibold">Belum Ada Agenda Terdekat</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Silakan tambahkan agenda atau kegiatan reuni baru!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            state.agenda.forEach(item => {
+                container.innerHTML += `
+                    <div class="bg-white border border-slate-200/60 p-4 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[9px] bg-amber-500/10 text-amber-700 px-2 py-0.5 rounded-full font-bold">
+                                ${item.category}
+                            </span>
+                        </div>
+                        <h4 class="text-sm font-bold text-slate-800 leading-snug">${item.title}</h4>
+                        <div class="mt-3 space-y-1.5 text-xs text-slate-600">
+                            <div class="flex items-center gap-1.5"><i class="fa-regular fa-calendar text-slate-400"></i> ${item.date}</div>
+                            <div class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-slate-400"></i> ${item.time}</div>
+                            <div class="flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot text-slate-400"></i> ${item.location}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // RENDERING UTAMA UNTUK SEMUA VIEW
+        function renderAll() {
+            // Update Dashboard Statistik
+            const elAlumni = document.getElementById('stat-alumni');
+            const elStatus = document.getElementById('stat-status');
+            const elLoker = document.getElementById('stat-loker');
+            const elAgenda = document.getElementById('stat-agenda');
+
+            if (elAlumni) elAlumni.innerText = state.alumni.length;
+            if (elStatus) elStatus.innerText = state.status.length;
+            if (elLoker) elLoker.innerText = state.loker.length;
+            if (elAgenda) elAgenda.innerText = state.agenda.length;
+
+            renderAlumniList();
+            renderTimeline();
+            renderLoker();
+            renderMemori();
+            renderAgenda();
+        }
+
+        // HANDLER DATA 1: REGISTRASI ALUMNI
+        async function handleRegisterAlumni(event) {
+            event.preventDefault();
             
-            msg.innerText = message;
+            const fileInput = document.getElementById('reg-avatar');
+            let avatarBase64 = "";
             
-            // Slide in animation
-            toast.classList.remove('translate-y-[-100px]', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                showToast("Mengompres foto profil...", "⌛");
+                avatarBase64 = await compressAvatarPromise(fileInput.files[0]);
+            }
+
+            const payload = {
+                id: 'ALUMNI_' + Date.now(),
+                name: document.getElementById('reg-name').value,
+                class: document.getElementById('reg-class').value,
+                city: document.getElementById('reg-city').value,
+                job: document.getElementById('reg-job').value,
+                wa: document.getElementById('reg-wa').value,
+                avatar: avatarBase64,
+                quote: document.getElementById('reg-quote').value,
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+
+            showToast("Menyimpan alumni...", "⌛");
+
+            if (isOnlineMode()) {
+                const ok = await postCloudData('Alumni', 'create', payload);
+                if (ok) {
+                    state.alumni.push(payload);
+                    localStorage.setItem('smandela_state', JSON.stringify(state));
+                }
+            } else {
+                state.alumni.push(payload);
+                localStorage.setItem('smandela_state', JSON.stringify(state));
+            }
+
+            showToast("Pendaftaran alumni berhasil!", "✅");
+            closeModal('register');
+            document.getElementById('reg-name').value = '';
+            document.getElementById('reg-city').value = '';
+            document.getElementById('reg-job').value = '';
+            document.getElementById('reg-wa').value = '';
+            document.getElementById('reg-quote').value = '';
+            if (fileInput) fileInput.value = '';
+            renderAll();
+        }
+
+        // HANDLER DATA 2: AGENDA REUNI KEGIATAN
+        async function handleCreateAgenda(event) {
+            event.preventDefault();
+            const payload = {
+                id: 'AGENDA_' + Date.now(),
+                title: document.getElementById('agenda-title').value,
+                category: document.getElementById('agenda-category').value,
+                date: document.getElementById('agenda-date').value,
+                time: document.getElementById('agenda-time').value,
+                location: document.getElementById('agenda-location').value,
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+
+            showToast("Mengunggah agenda...", "⌛");
+
+            if (isOnlineMode()) {
+                const ok = await postCloudData('Agenda', 'create', payload);
+                if (ok) {
+                    state.agenda.push(payload);
+                    localStorage.setItem('smandela_state', JSON.stringify(state));
+                }
+            } else {
+                state.agenda.push(payload);
+                localStorage.setItem('smandela_state', JSON.stringify(state));
+            }
+
+            showToast("Agenda berhasil diterbitkan!", "✅");
+            closeModal('agenda');
+            document.getElementById('agenda-title').value = '';
+            document.getElementById('agenda-date').value = '';
+            document.getElementById('agenda-time').value = '';
+            document.getElementById('agenda-location').value = '';
+            renderAll();
+        }
+
+        // HANDLER DATA 3: BURSA KERJA & UMKM
+        async function handleCreateLoker(event) {
+            event.preventDefault();
+            const payload = {
+                id: 'LOKER_' + Date.now(),
+                type: document.getElementById('loker-type').value,
+                title: document.getElementById('loker-title').value,
+                owner: document.getElementById('loker-owner').value,
+                location: document.getElementById('loker-location').value,
+                contact: document.getElementById('loker-contact').value,
+                desc: document.getElementById('loker-desc').value,
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+
+            showToast("Memproses postingan...", "⌛");
+
+            if (isOnlineMode()) {
+                const ok = await postCloudData('Loker', 'create', payload);
+                if (ok) {
+                    state.loker.push(payload);
+                    localStorage.setItem('smandela_state', JSON.stringify(state));
+                }
+            } else {
+                state.loker.push(payload);
+                localStorage.setItem('smandela_state', JSON.stringify(state));
+            }
+
+            showToast("Promosi berhasil diterbitkan!", "✅");
+            closeModal('loker');
+            document.getElementById('loker-title').value = '';
+            document.getElementById('loker-owner').value = '';
+            document.getElementById('loker-location').value = '';
+            document.getElementById('loker-contact').value = '';
+            document.getElementById('loker-desc').value = '';
+            renderAll();
+        }
+
+        // HANDLER DATA 4: MEMORI NOSTALGIA
+        function handleCreateMemori(event) {
+            event.preventDefault();
+            const fileInput = document.getElementById('memori-file');
+            const file = fileInput ? fileInput.files[0] : null;
+
+            if (!file) {
+                showToast("Pilih berkas foto terlebih dahulu!", "⚠️");
+                return;
+            }
+
+            showToast("Sedang mengompres gambar...", "⌛");
+
+            compressImage(file, async function(compressedBase64) {
+                const payload = {
+                    id: 'MEMORI_' + Date.now(),
+                    title: document.getElementById('memori-title').value,
+                    year: document.getElementById('memori-year').value,
+                    url: compressedBase64, // Menyimpan versi micro
+                    author: document.getElementById('memori-author').value,
+                    timestamp: new Date().toLocaleString('id-ID')
+                };
+
+                showToast("Mengunggah kenangan...", "⌛");
+
+                if (isOnlineMode()) {
+                    const ok = await postCloudData('Memori', 'create', payload);
+                    if (ok) {
+                        state.memori.push(payload);
+                        localStorage.setItem('smandela_state', JSON.stringify(state));
+                    }
+                } else {
+                    state.memori.push(payload);
+                    localStorage.setItem('smandela_state', JSON.stringify(state));
+                }
+
+                showToast("Foto kenangan berhasil diunggah!", "✅");
+                closeModal('memori');
+                document.getElementById('memori-title').value = '';
+                document.getElementById('memori-year').value = '';
+                document.getElementById('memori-author').value = '';
+                if (fileInput) fileInput.value = '';
+                renderAll();
+            });
+        }
+
+        // HANDLER DATA 5: BUAT STATUS BARU
+        async function handleCreateStatus(event) {
+            event.preventDefault();
+            const payload = {
+                id: 'STATUS_' + Date.now(),
+                author: document.getElementById('status-author').value,
+                class: document.getElementById('status-class').value,
+                content: document.getElementById('status-content').value,
+                likes: 0,
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+
+            showToast("Mengirim status...", "⌛");
+
+            if (isOnlineMode()) {
+                const ok = await postCloudData('Status', 'create', payload);
+                if (ok) {
+                    state.status.push(payload);
+                    localStorage.setItem('smandela_state', JSON.stringify(state));
+                }
+            } else {
+                state.status.push(payload);
+                localStorage.setItem('smandela_state', JSON.stringify(state));
+            }
+
+            showToast("Kabar berhasil dibagikan!", "✅");
+            document.getElementById('status-content').value = '';
+            renderAll();
+        }
+
+        // HANDLER DATA 6: SUKA STATUS (LIKE)
+        async function handleLikePost(id) {
+            const index = state.status.findIndex(p => p.id === id);
+            if (index !== -1) {
+                state.status[index].likes = (parseInt(state.status[index].likes) || 0) + 1;
+                showToast("Menyukai postingan!", "❤️");
+
+                if (isOnlineMode()) {
+                    postCloudData('Status', 'like', { id: id });
+                }
+                localStorage.setItem('smandela_state', JSON.stringify(state));
+                renderAll();
+            }
+        }
+
+        // HANDLER DATA 7: KIRIM BALASAN KOMENTAR
+        async function handleCreateComment(event, statusId) {
+            event.preventDefault();
+            const form = event.target;
+            const payload = {
+                id: 'COMMENT_' + Date.now(),
+                statusId: statusId,
+                author: form.querySelector('.comment-author').value,
+                class: form.querySelector('.comment-class').value,
+                content: form.querySelector('.comment-content').value,
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+
+            showToast("Mengirim komentar...", "⌛");
+
+            if (isOnlineMode()) {
+                const ok = await postCloudData('Komentar', 'create', payload);
+                if (ok) {
+                    state.komentar.push(payload);
+                    localStorage.setItem('smandela_state', JSON.stringify(state));
+                }
+            } else {
+                state.komentar.push(payload);
+                localStorage.setItem('smandela_state', JSON.stringify(state));
+            }
+
+            showToast("Komentar dikirim!", "✅");
+            form.querySelector('.comment-content').value = '';
+            renderAll();
+        }
+
+        // MODUL POPUP TOAST KUSTOM
+        function showToast(message, icon = "✨") {
+            const toast = document.getElementById('toast');
+            const iconEl = document.getElementById('toast-icon');
+            const textEl = document.getElementById('toast-text');
+            if (!toast || !iconEl || !textEl) return;
             
-            // Slide out after 3.5 seconds
+            iconEl.innerText = icon;
+            textEl.innerText = message;
+            
+            toast.className = "fixed top-5 left-1/2 -translate-x-1/2 bg-white border border-slate-200 text-slate-800 text-xs px-5 py-3 rounded-full shadow-2xl z-50 flex items-center gap-2 transition-all duration-300 translate-y-0 opacity-100";
+            
             setTimeout(() => {
-                toast.classList.add('translate-y-[-100px]', 'opacity-0');
-                toast.classList.remove('translate-y-0', 'opacity-100');
-            }, 3500);
+                toast.className = "fixed top-5 left-1/2 -translate-x-1/2 bg-white border border-slate-200 text-slate-800 text-xs px-5 py-3 rounded-full shadow-2xl z-50 flex items-center gap-2 transition-all duration-300 translate-y-[-100px] opacity-0";
+            }, 3000);
         }
 
-        // Navigation Switching (Tab Control)
-        function switchTab(tabId) {
-            // Hide all tab sections
-            document.querySelectorAll('.tab-content').forEach(el => {
-                el.classList.add('hidden');
-                el.classList.remove('block');
-            });
-
-            // Show selected tab
-            const targetView = document.getElementById(`view-${tabId}`);
-            if (targetView) {
-                targetView.classList.remove('hidden');
-                targetView.classList.add('block');
-            }
-
-            // Update Navigation Button States (Desktop)
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                if (btn.getAttribute('data-target') === tabId) {
-                    btn.classList.add('bg-white/15', 'text-amber-400');
-                    btn.classList.remove('text-white');
-                } else {
-                    btn.classList.remove('bg-white/15', 'text-amber-400');
-                    btn.classList.add('text-white');
-                }
-            });
-
-            // Update Navigation Button States (Mobile)
-            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
-                if (btn.getAttribute('data-target') === tabId) {
-                    btn.classList.add('text-blue-600');
-                    btn.classList.remove('text-slate-400');
-                } else {
-                    btn.classList.remove('text-blue-600');
-                    btn.classList.add('text-slate-400');
-                }
-            });
-
-            // Scroll back to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Modals management
+        // PENANGAN MODAL LAYOUT
         function openModal(modalId) {
-            const modal = document.getElementById(modalId);
+            const modal = document.getElementById(`modal-${modalId}`);
             if (modal) {
                 modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Lock background scroll
+                modal.classList.add('flex');
             }
         }
 
         function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
+            const modal = document.getElementById(`modal-${modalId}`);
             if (modal) {
                 modal.classList.add('hidden');
-                document.body.style.overflow = ''; // Unlock background scroll
+                modal.classList.remove('flex');
             }
         }
 
-        // Handle Alumni Registration
-        async function handleRegisterAlumni(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('reg-name').value.trim();
-            const alumniClass = document.getElementById('reg-class').value;
-            const city = document.getElementById('reg-city').value.trim();
-            const job = document.getElementById('reg-job').value.trim();
-            const wa = document.getElementById('reg-wa').value.trim();
-            const avatarInput = document.getElementById('reg-avatar').value.trim();
-            const quote = document.getElementById('reg-quote').value.trim();
+        // Helper wrappers for modal triggers
+        function openRegisterModal() { openModal('register'); }
+        function openAgendaModal() { openModal('agenda'); }
+        function openLokerModal() { openModal('loker'); }
+        function openMemoriModal() { openModal('memori'); }
+        function openConfigModal() { openModal('config'); }
 
-            const avatar = avatarInput || `https://placehold.co/150/1e3a8a/ffffff?text=${encodeURIComponent(name.charAt(0))}`;
+        // SINKRONISASI BADGE UTAMA
+        function updateConnectionBadge() {
+            const badge = document.getElementById('connection-badge');
+            const ping = document.getElementById('connection-ping');
+            const text = document.getElementById('connection-text');
+            if (!badge || !ping || !text) return;
 
-            // Create new record
-            const newAlumni = {
-                id: `alumni-${Date.now()}`,
-                name,
-                class: alumniClass,
-                city,
-                job,
-                wa,
-                avatar,
-                quote,
-                timestamp: new Date().toISOString()
-            };
-
-            // Post to cloud if configured
-            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
-                showToast('Menyimpan ke Cloud...', 'info');
-                await writeToCloud('Alumni', 'create', newAlumni);
-                await fetchAllFromCloud();
+            if (isOnlineMode()) {
+                badge.className = "bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all duration-300";
+                ping.className = "w-2 h-2 rounded-full bg-emerald-500 animate-ping";
+                text.innerText = "Mode Online (Google Sheets)";
             } else {
-                alumniState.unshift(newAlumni);
-                saveStateLocally();
+                badge.className = "bg-amber-500/10 border border-amber-500/25 text-amber-700 px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all duration-300";
+                ping.className = "w-2 h-2 rounded-full bg-amber-500 animate-ping";
+                text.innerText = "Mode Offline (Penyimpanan Lokal)";
             }
-
-            renderAlumni();
-            populateCityFilter();
-            
-            // Clean & close modal
-            document.getElementById('form-daftar').reset();
-            closeModal('modal-daftar');
-            showToast('Profil Anda berhasil didaftarkan ke Database!');
         }
 
-        // Populate City Filters from Data State
-        function populateCityFilter() {
-            const citySelect = document.getElementById('alumni-filter-city');
-            const cities = [...new Set(alumniState.map(item => item.city))].sort();
-            
-            // Clear current options keep "Semua Kota"
-            citySelect.innerHTML = '<option value="">Semua Kota Domisili</option>';
-            
-            cities.forEach(city => {
-                const opt = document.createElement('option');
-                opt.value = city;
-                opt.innerText = city;
-                citySelect.appendChild(opt);
+        // PINDAH TAB NAVIGATION UTAMA
+        function switchTab(tabId) {
+            // Sembunyikan semua views
+            const views = document.querySelectorAll('.tab-view');
+            views.forEach(v => v.classList.add('hidden'));
+
+            // Tampilkan view aktif
+            const activeView = document.getElementById(`view-${tabId}`);
+            if (activeView) activeView.classList.remove('hidden');
+
+            // Perbarui tombol desktop
+            const pcButtons = document.querySelectorAll('.nav-btn-pc');
+            pcButtons.forEach(btn => {
+                btn.className = "nav-btn-pc text-slate-600 hover:bg-slate-100 px-4 py-2 rounded-xl text-sm font-semibold transition";
             });
-        }
-
-        // Render Alumni Grid Card View
-        function renderAlumni(filteredList = alumniState) {
-            const container = document.getElementById('alumni-grid');
-            const emptyState = document.getElementById('alumni-empty-state');
-            container.innerHTML = '';
-
-            if (filteredList.length === 0) {
-                emptyState.classList.remove('hidden');
-                return;
-            } else {
-                emptyState.classList.add('hidden');
+            const activePcBtn = document.getElementById(`pc-tab-${tabId}`);
+            if (activePcBtn) {
+                activePcBtn.className = "nav-btn-pc bg-brand-blue text-white px-4 py-2 rounded-xl text-sm font-semibold transition shadow-sm";
             }
 
-            filteredList.forEach(alumni => {
-                const card = document.createElement('div');
-                card.className = "glass-card rounded-2xl p-5 hover:shadow-lg transition-all duration-300 relative group overflow-hidden border border-slate-100 flex flex-col justify-between";
-                
-                // Card contents
-                card.innerHTML = `
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4">
-                            <img src="${alumni.avatar}" alt="${alumni.name}" onerror="this.src='https://placehold.co/150/1e3a8a/ffffff?text=Alumni'" class="w-14 h-14 rounded-full object-cover border-2 border-amber-400 shrink-0 shadow-sm">
-                            <div class="min-w-0">
-                                <h3 class="font-extrabold text-slate-900 leading-tight truncate text-sm" title="${alumni.name}">${alumni.name}</h3>
-                                <div class="flex flex-wrap gap-1.5 mt-1.5">
-                                    <span class="bg-blue-50 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-100">${alumni.class}</span>
-                                    <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-full">${alumni.city}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="pt-1.5">
-                            <p class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Pekerjaan / Instansi</p>
-                            <p class="text-xs text-slate-700 font-semibold mt-0.5">${alumni.job}</p>
-                        </div>
-
-                        ${alumni.quote ? `
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                            <p class="text-xs italic text-slate-500 leading-relaxed font-light">" ${alumni.quote} "</p>
-                        </div>
-                        ` : ''}
-                    </div>
-
-                    <div class="pt-4 border-t border-slate-100 mt-4 flex items-center justify-between">
-                        <a href="https://wa.me/62${alumni.wa}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-2 px-4 rounded-xl text-xs text-center flex items-center justify-center gap-1.5 transition-all">
-                            <i class="fa-brands fa-whatsapp text-sm"></i> Hubungi via WhatsApp
-                        </a>
-                    </div>
-                `;
-                
-                container.appendChild(card);
+            // Perbarui tombol mobile
+            const mobileButtons = document.querySelectorAll('nav.md\\:hidden button');
+            mobileButtons.forEach(btn => {
+                btn.className = "flex flex-col items-center gap-1 text-slate-500 hover:text-brand-blue transition";
             });
+            const activeMobileBtn = document.getElementById(`mobile-tab-${tabId}`);
+            if (activeMobileBtn) {
+                activeMobileBtn.className = "flex flex-col items-center gap-1 text-brand-blue font-bold transition";
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Filter and Search Algorithm
-        function filterAlumni() {
-            const searchKeyword = document.getElementById('alumni-search-input').value.toLowerCase();
-            const classFilter = document.getElementById('alumni-filter-class').value;
-            const cityFilter = document.getElementById('alumni-filter-city').value;
-
-            const filtered = alumniState.filter(item => {
-                const matchSearch = item.name.toLowerCase().includes(searchKeyword) || item.job.toLowerCase().includes(searchKeyword);
-                const matchClass = classFilter === '' || item.class === classFilter;
-                const matchCity = cityFilter === '' || item.city === cityFilter;
-
-                return matchSearch && matchClass && matchCity;
-            });
-
-            renderAlumni(filtered);
-        }
-
-        // Switch subtabs on Job/UMKM Section
-        function switchLokerSubTab(subTab) {
-            currentLokerSubTab = subTab;
-            
-            const btnUmkm = document.getElementById('subtab-btn-umkm');
-            const btnKerja = document.getElementById('subtab-btn-kerja');
-            
-            const contUmkm = document.getElementById('container-umkm');
-            const contKerja = document.getElementById('container-kerja');
-
-            if (subTab === 'umkm') {
-                btnUmkm.className = "px-5 py-3 text-xs font-bold border-b-2 border-emerald-600 text-emerald-600";
-                btnKerja.className = "px-5 py-3 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
-                contUmkm.classList.replace('hidden', 'grid');
-                contKerja.classList.replace('grid', 'hidden');
+        // PENGATURAN DATABASE CLOUD HANDLER
+        function saveConfig() {
+            const url = document.getElementById('config-sheets-url').value;
+            if (url) {
+                localStorage.setItem('smandela_sheets_url', url);
+                googleSheetsUrl = url;
+                showToast("Berhasil menyimpan URL Database Cloud!", "✅");
+                closeModal('config');
+                initDatabase();
             } else {
-                btnKerja.className = "px-5 py-3 text-xs font-bold border-b-2 border-emerald-600 text-emerald-600";
-                btnUmkm.className = "px-5 py-3 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800";
-                contKerja.classList.replace('hidden', 'grid');
-                contUmkm.classList.replace('grid', 'hidden');
-            }
-            
-            renderLoker();
-        }
-
-        // Render Loker & UMKM Elements
-        function renderLoker() {
-            const containerUmkm = document.getElementById('container-umkm');
-            const containerKerja = document.getElementById('container-kerja');
-            const emptyState = document.getElementById('loker-empty-state');
-            
-            containerUmkm.innerHTML = '';
-            containerKerja.innerHTML = '';
-
-            const umkmList = lokerState.filter(i => i.type === 'umkm');
-            const kerjaList = lokerState.filter(i => i.type === 'kerja');
-
-            // Render UMKM Usaha
-            umkmList.forEach(item => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-all";
-                card.innerHTML = `
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-start">
-                            <span class="bg-amber-100 text-amber-800 text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">Usaha Alumni</span>
-                            <span class="text-xs text-slate-400 flex items-center gap-1"><i class="fa-solid fa-location-dot"></i> ${item.location}</span>
-                        </div>
-                        <h3 class="font-extrabold text-slate-900 text-base leading-tight">${item.title}</h3>
-                        <p class="text-xs text-slate-500 font-medium">Pemilik: ${item.owner}</p>
-                        <p class="text-xs text-slate-600 leading-relaxed font-light mt-2">${item.desc}</p>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100 mt-4">
-                        <a href="https://wa.me/62${item.contact}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-xl text-xs text-center flex items-center justify-center gap-1.5 transition-all">
-                            <i class="fa-solid fa-cart-shopping"></i> Hubungi Pembelian / Pesan
-                        </a>
-                    </div>
-                `;
-                containerUmkm.appendChild(card);
-            });
-
-            // Render Lowongan Kerja
-            kerjaList.forEach(item => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-all";
-                card.innerHTML = `
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-start">
-                            <span class="bg-blue-100 text-blue-800 text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">Lowongan Kerja</span>
-                            <span class="text-xs text-slate-400 flex items-center gap-1"><i class="fa-solid fa-location-dot"></i> ${item.location}</span>
-                        </div>
-                        <h3 class="font-extrabold text-slate-900 text-base leading-tight">${item.title}</h3>
-                        <p class="text-xs text-slate-500 font-medium">Instansi/Pemberi: ${item.owner}</p>
-                        <p class="text-xs text-slate-600 leading-relaxed font-light mt-2">${item.desc}</p>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100 mt-4">
-                        <a href="https://wa.me/62${item.contact}" target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl text-xs text-center flex items-center justify-center gap-1.5 transition-all">
-                            <i class="fa-solid fa-envelope"></i> Lamar Kerja / Kirim WA
-                        </a>
-                    </div>
-                `;
-                containerKerja.appendChild(card);
-            });
-
-            // Show empty state if appropriate
-            if (currentLokerSubTab === 'umkm' && umkmList.length === 0) {
-                emptyState.classList.remove('hidden');
-            } else if (currentLokerSubTab === 'kerja' && kerjaList.length === 0) {
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
+                showToast("Masukkan URL terlebih dahulu!", "⚠️");
             }
         }
 
-        // Post Loker & UMKM Form Handler
-        async function handlePostLoker(e) {
-            e.preventDefault();
-
-            const postType = document.querySelector('input[name="post-type"]:checked').value;
-            const title = document.getElementById('loker-title').value.trim();
-            const owner = document.getElementById('loker-owner').value.trim();
-            const location = document.getElementById('loker-location').value.trim();
-            const contact = document.getElementById('loker-contact').value.trim();
-            const desc = document.getElementById('loker-desc').value.trim();
-
-            const newPost = {
-                id: `post-${Date.now()}`,
-                type: postType,
-                title,
-                owner,
-                location,
-                contact,
-                desc,
-                timestamp: new Date().toISOString()
-            };
-
-            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
-                showToast('Menyimpan data loker...', 'info');
-                await writeToCloud('Loker', 'create', newPost);
-                await fetchAllFromCloud();
-            } else {
-                lokerState.unshift(newPost);
-                saveStateLocally();
-            }
-            
-            // Clean & close
-            document.getElementById('form-loker').reset();
-            closeModal('modal-tambah-loker');
-            showToast('Iklan/Loker Anda berhasil diposting!');
-            
-            // Auto switch to corresponding tab
-            switchLokerSubTab(postType);
+        function disconnectConfig() {
+            localStorage.removeItem('smandela_sheets_url');
+            googleSheetsUrl = 'SILAKAN_TEMPEL_URL_GOOGLE_APPS_SCRIPT_ANDA_DI_SINI';
+            const inputUrl = document.getElementById('config-sheets-url');
+            if (inputUrl) inputUrl.value = '';
+            showToast("Kembali ke Mode Offline!", "🔌");
+            closeModal('config');
+            initDatabase();
         }
 
-        // Render Memories Gallery Grid
-        function renderMemori() {
-            const container = document.getElementById('memori-grid');
-            const emptyState = document.getElementById('memori-empty-state');
-            container.innerHTML = '';
-
-            if (memoriState.length === 0) {
-                emptyState.classList.remove('hidden');
-                return;
-            } else {
-                emptyState.classList.add('hidden');
-            }
-
-            memoriState.forEach(item => {
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-md transition-all group flex flex-col justify-between";
-                card.innerHTML = `
-                    <div class="relative overflow-hidden aspect-video bg-slate-100 shrink-0">
-                        <img src="${item.url}" alt="${item.title}" onerror="this.src='https://placehold.co/600x400/1e3a8a/ffffff?text=Nostalgia+SMA'" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-300">
-                        <span class="absolute top-3 left-3 bg-slate-900/70 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">Kelas Angkatan ${item.year}</span>
-                    </div>
-                    <div class="p-4 flex-grow flex flex-col justify-between">
-                        <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-snug line-clamp-2">${item.title}</h4>
-                        <div class="flex items-center justify-between border-t pt-3 mt-3">
-                            <div class="flex items-center gap-1.5 text-[11px] text-slate-400">
-                                <i class="fa-solid fa-circle-user"></i> Oleh: <span class="font-bold text-slate-600">${item.author}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // Post Memories Handler
-        async function handlePostMemory(e) {
-            e.preventDefault();
-
-            const title = document.getElementById('memori-title').value.trim();
-            const year = document.getElementById('memori-year').value;
-            const author = document.getElementById('memori-author').value.trim();
-
-            if (!compressedImageBase64) {
-                showToast('Harap pilih foto dan tunggu hingga kompresi selesai!', 'info');
-                return;
-            }
-
-            const newMemori = {
-                id: `memori-${Date.now()}`,
-                title,
-                year,
-                url: compressedImageBase64,
-                author,
-                timestamp: new Date().toISOString()
-            };
-
-            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
-                showToast('Mengunggah foto kenangan...', 'info');
-                await writeToCloud('Memori', 'create', newMemori);
-                await fetchAllFromCloud();
-            } else {
-                memoriState.unshift(newMemori);
-                saveStateLocally();
-            }
-
-            renderMemori();
-
-            // Clean & close
-            document.getElementById('form-memori').reset();
-            document.getElementById('upload-preview-container').classList.add('hidden');
-            compressedImageBase64 = ""; // Reset variable
-            closeModal('modal-tambah-memori');
-            showToast('Foto nostalgia Anda berhasil dibagikan!');
-        }
-
-        // Format Agenda Date Badge helper
-        function formatDateBadge(dateStr) {
-            if(!dateStr) return { day: '??', month: '???' };
-            const date = new Date(dateStr);
-            if (isNaN(date.getTime())) return { day: '??', month: '???' };
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
-            return {
-                day: String(date.getDate()).padStart(2, '0'),
-                month: months[date.getMonth()].toUpperCase()
-            };
-        }
-
-        // Render Agenda Lists on Beranda
-        function renderAgenda() {
-            const container = document.getElementById('agenda-container');
-            container.innerHTML = '';
-
-            if (agendaState.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-8 bg-slate-50 rounded-xl border border-dashed border-slate-200">
-                        <p class="text-2xl text-slate-300"><i class="fa-solid fa-calendar-xmark"></i></p>
-                        <h4 class="font-bold text-slate-600 mt-2 text-xs">Belum ada agenda terdekat</h4>
-                        <p class="text-[11px] text-slate-400">Klik "Tambah Agenda" di atas untuk menambahkan kegiatan alumni baru!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            agendaState.forEach(agenda => {
-                const dateBadge = formatDateBadge(agenda.date);
-                let badgeColorClass = 'bg-blue-600';
-                let tagColorClass = 'bg-blue-100 text-blue-800';
-
-                if (agenda.category === 'Sosial') {
-                    badgeColorClass = 'bg-emerald-600';
-                    tagColorClass = 'bg-emerald-100 text-emerald-800';
-                } else if (agenda.category === 'Rapat') {
-                    badgeColorClass = 'bg-amber-600';
-                    tagColorClass = 'bg-amber-100 text-amber-800';
-                } else if (agenda.category === 'Olahraga') {
-                    badgeColorClass = 'bg-indigo-600';
-                    tagColorClass = 'bg-indigo-100 text-indigo-800';
-                }
-
-                const card = document.createElement('div');
-                card.className = "flex items-center gap-4 p-3 bg-slate-50 rounded-xl hover:bg-slate-100/80 transition-all";
-                card.innerHTML = `
-                    <div class="${badgeColorClass} text-white rounded-lg p-2.5 text-center w-14 shrink-0 shadow-sm">
-                        <p class="text-[10px] uppercase font-extrabold">${dateBadge.month}</p>
-                        <p class="text-lg font-black leading-none">${dateBadge.day}</p>
-                    </div>
-                    <div class="flex-grow min-w-0">
-                        <span class="${tagColorClass} text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">${agenda.category || 'Silaturahmi'}</span>
-                        <h4 class="font-bold text-slate-900 text-sm mt-1 truncate" title="${agenda.title}">${agenda.title}</h4>
-                        <p class="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5 truncate">
-                            <i class="fa-solid fa-location-dot text-slate-400"></i> ${agenda.location} | ${agenda.time || ''}
-                        </p>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // Handle post agenda reuni
-        async function handlePostAgenda(e) {
-            e.preventDefault();
-
-            const title = document.getElementById('agenda-title').value.trim();
-            const category = document.getElementById('agenda-category').value;
-            const date = document.getElementById('agenda-date').value;
-            const time = document.getElementById('agenda-time').value.trim();
-            const location = document.getElementById('agenda-location').value.trim();
-
-            const newAgenda = {
-                id: `agenda-${Date.now()}`,
-                title,
-                category,
-                date,
-                time,
-                location,
-                timestamp: new Date().toISOString()
-            };
-
-            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
-                showToast('Menyimpan agenda...', 'info');
-                await writeToCloud('Agenda', 'create', newAgenda);
-                await fetchAllFromCloud();
-            } else {
-                agendaState.unshift(newAgenda);
-                saveStateLocally();
-            }
-
-            renderAgenda();
-            updateStats();
-
-            // Clean & close
-            document.getElementById('form-agenda').reset();
-            closeModal('modal-tambah-agenda');
-            showToast('Agenda reuni baru berhasil ditambahkan!');
-        }
-
-        // Render Timeline/Status Feed with comments inside
-        function renderStatus() {
-            const feedContainer = document.getElementById('status-feed-container');
-            feedContainer.innerHTML = '';
-
-            if (statusState.length === 0) {
-                feedContainer.innerHTML = `
-                    <div class="text-center py-10 bg-white rounded-2xl border border-dashed border-slate-200">
-                        <p class="text-2xl text-slate-300"><i class="fa-solid fa-comments"></i></p>
-                        <h4 class="font-bold text-slate-600 mt-2 text-xs">Belum ada status terbaru</h4>
-                        <p class="text-[11px] text-slate-400">Jadilah yang pertama untuk membagikan kabar hari ini!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            statusState.forEach((status) => {
-                const statusCard = document.createElement('div');
-                statusCard.className = "bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-4";
-                
-                // Constructing Comments elements
-                let commentsHtml = '';
-                if (status.comments && status.comments.length > 0) {
-                    status.comments.forEach(c => {
-                        commentsHtml += `
-                            <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="font-bold text-xs text-slate-900">${c.author}</span>
-                                        <span class="bg-slate-200 text-slate-700 text-[9px] px-1.5 py-0.2 rounded font-bold">${c.class || 'Alumni'}</span>
-                                    </div>
-                                    <span class="text-[9px] text-slate-400">${c.timestamp === "Baru saja" ? "Baru saja" : new Date(c.timestamp).toLocaleDateString('id-ID')}</span>
-                                </div>
-                                <p class="text-xs text-slate-700 mt-1 font-light">${c.content}</p>
-                            </div>
-                        `;
-                    });
-                } else {
-                    commentsHtml = `<p class="text-[11px] text-slate-400 italic font-light py-1 text-center">Belum ada komentar. Yuk tulis pesan Anda di bawah!</p>`;
-                }
-
-                statusCard.innerHTML = `
-                    <!-- Author info -->
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <img src="${status.avatar || 'https://placehold.co/150/1e3a8a/ffffff?text=' + status.author.charAt(0)}" alt="${status.author}" class="w-10 h-10 rounded-full border border-blue-100 object-cover shrink-0">
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-extrabold text-slate-900 text-sm leading-none">${status.author}</h4>
-                                    <span class="bg-blue-100 text-blue-800 text-[9px] font-bold px-2 py-0.5 rounded-full">${status.class}</span>
-                                </div>
-                                <span class="text-[10px] text-slate-400 mt-1 block">${status.timestamp === "Baru saja" ? "Baru saja" : new Date(status.timestamp).toLocaleDateString('id-ID')}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content -->
-                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed font-light">${status.content}</p>
-
-                    <!-- Like and Stats Row -->
-                    <div class="flex items-center gap-4 text-xs pt-1 border-t border-slate-50">
-                        <button onclick="handleLikeStatus('${status.id}')" class="flex items-center gap-1 text-rose-500 hover:text-rose-600 transition-colors font-semibold">
-                            <i class="fa-solid fa-heart"></i> Suka (${status.likes || 0})
-                        </button>
-                        <span class="text-slate-400"><i class="fa-solid fa-comment"></i> Komentar (${status.comments ? status.comments.length : 0})</span>
-                    </div>
-
-                    <!-- Comment Section area -->
-                    <div class="bg-slate-50/50 rounded-xl p-3 border border-slate-100 space-y-3">
-                        <p class="text-xs font-bold text-slate-800 border-b pb-1.5">Komentar Anggota</p>
-                        
-                        <div class="space-y-2 max-h-60 overflow-y-auto">
-                            ${commentsHtml}
-                        </div>
-
-                        <!-- Comment form box inside card -->
-                        <form onsubmit="handlePostComment(event, '${status.id}')" class="flex gap-2 pt-2 border-t border-slate-100">
-                            <input type="text" placeholder="Tulis komentar..." required class="flex-grow bg-white border border-slate-200 text-slate-800 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg shadow-sm shrink-0 flex items-center justify-center">
-                                <i class="fa-solid fa-paper-plane"></i>
-                            </button>
-                        </form>
-                    </div>
-                `;
-
-                feedContainer.appendChild(statusCard);
-            });
-        }
-
-        // Handler to post a new status update
-        async function handlePostStatus(e) {
-            e.preventDefault();
-
-            const author = document.getElementById('status-author').value.trim();
-            const userClass = document.getElementById('status-class').value;
-            const content = document.getElementById('status-content').value.trim();
-
-            const newStatus = {
-                id: `status-${Date.now()}`,
-                author: author,
-                class: userClass,
-                avatar: `https://placehold.co/150/1e3a8a/ffffff?text=${encodeURIComponent(author.charAt(0))}`,
-                content: content,
-                timestamp: new Date().toISOString(),
-                likes: 0
-            };
-
-            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
-                showToast('Mengirim kabar...', 'info');
-                await writeToCloud('Status', 'create', newStatus);
-                await fetchAllFromCloud();
-            } else {
-                newStatus.comments = [];
-                statusState.unshift(newStatus);
-                saveStateLocally();
-            }
-
-            renderStatus();
-            document.getElementById('status-content').value = '';
-            showToast('Kabar status berhasil diposting!');
-        }
-
-        // Handler for likes
-        async function handleLikeStatus(statusId) {
-            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
-                const payload = {
-                    sheet: 'Status',
-                    action: 'like',
-                    id: statusId
-                };
-                
-                try {
-                    await fetch(googleSheetsUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    
-                    // Increment in UI directly for snappy feel
-                    const stIndex = statusState.findIndex(s => s.id == statusId);
-                    if (stIndex !== -1) {
-                        statusState[stIndex].likes = (statusState[stIndex].likes || 0) + 1;
-                        renderStatus();
-                    }
-                } catch (e) {
-                    console.error('Like cloud error:', e);
-                }
-            } else {
-                const statusIndex = statusState.findIndex(s => s.id === statusId);
-                if (statusIndex !== -1) {
-                    statusState[statusIndex].likes = (statusState[statusIndex].likes || 0) + 1;
-                    saveStateLocally();
-                    renderStatus();
-                }
-            }
-        }
-
-        // Handler to post a dynamic comment
-        async function handlePostComment(e, statusId) {
-            e.preventDefault();
-
-            const commentInput = e.target.querySelector('input');
-            const content = commentInput.value.trim();
-            if (!content) return;
-
-            const newComment = {
-                id: `cmt-${Date.now()}`,
-                statusId: statusId,
-                author: "Alumni SMANDELA",
-                class: "98",
-                content: content,
-                timestamp: new Date().toISOString()
-            };
-
-            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
-                showToast('Mengirim komentar...', 'info');
-                await writeToCloud('Komentar', 'create', newComment);
-                await fetchAllFromCloud();
-            } else {
-                const statusIndex = statusState.findIndex(s => s.id === statusId);
-                if (statusIndex !== -1) {
-                    if (!statusState[statusIndex].comments) {
-                        statusState[statusIndex].comments = [];
-                    }
-                    statusState[statusIndex].comments.push(newComment);
-                    saveStateLocally();
-                }
-            }
-
-            renderStatus();
-            commentInput.value = '';
-            showToast('Komentar Anda terkirim!');
-        }
-
-        // Stats updater counter
-        function updateStats() {
-            document.getElementById('stat-alumni-count').innerText = alumniState.length;
-            document.getElementById('stat-jobs-count').innerText = lokerState.length;
-            document.getElementById('stat-status-count').innerText = statusState.length;
-            document.getElementById('stat-agenda-count').innerText = agendaState.length;
-        }
-
-        // Admin Trigger: Clear database (handles cloud or local securely)
-        function clearAllData() {
-            showCustomConfirm("Apakah Anda yakin ingin menghapus seluruh data alumni, status, loker, agenda, dan foto kenangan untuk memulai database SMANDELA 98 dari awal?", async () => {
-                if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
-                    showToast('Membersihkan database cloud...', 'info');
-                    
-                    const clearSheet = async (sheetName) => {
-                        await fetch(googleSheetsUrl, {
-                            method: 'POST',
-                            mode: 'no-cors',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ sheet: sheetName, action: 'clear' })
-                        });
-                    };
-
-                    await Promise.all([
-                        clearSheet('Alumni'),
-                        clearSheet('Status'),
-                        clearSheet('Komentar'),
-                        clearSheet('Loker'),
-                        clearSheet('Memori'),
-                        clearSheet('Agenda')
-                    ]);
-                    
-                    await fetchAllFromCloud();
-                } else {
-                    localStorage.removeItem('smandela98_alumni');
-                    localStorage.removeItem('smandela98_loker');
-                    localStorage.removeItem('smandela98_memori');
-                    localStorage.removeItem('smandela98_status');
-                    localStorage.removeItem('smandela98_agenda');
-                    
-                    alumniState = [];
-                    lokerState = [];
-                    memoriState = [];
-                    statusState = [];
-                    agendaState = [];
-                    saveStateLocally();
-                }
-
-                // Re-render
-                populateCityFilter();
-                renderAlumni();
-                renderLoker();
-                renderMemori();
-                renderStatus();
-                renderAgenda();
-                updateStats();
-                
-                showToast("Semua data berhasil dibersihkan! Mulai dari nol.", "info");
-            });
-        }
-
-        // Countdown Reuni Perak System
-        function initCountdown() {
-            // Target date: Reuni Perak 15 Agustus 2026
-            const targetDate = new Date("Aug 15, 2026 10:00:00").getTime();
-
-            function updateTimer() {
-                const now = new Date().getTime();
-                const difference = targetDate - now;
-
-                if (difference < 0) {
-                    clearInterval(countdownInterval);
-                    document.getElementById('countdown-days').innerText = "0";
-                    document.getElementById('countdown-hours').innerText = "0";
-                    document.getElementById('countdown-minutes').innerText = "0";
-                    document.getElementById('countdown-seconds').innerText = "0";
-                    return;
-                }
-
-                // Calculating intervals
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-                // Update UI elements securely
-                document.getElementById('countdown-days').innerText = days;
-                document.getElementById('countdown-hours').innerText = hours;
-                document.getElementById('countdown-minutes').innerText = minutes;
-                document.getElementById('countdown-seconds').innerText = seconds;
-            }
-
-            updateTimer(); // Initial call
-            const countdownInterval = setInterval(updateTimer, 1000);
-        }
+        // BOOTING UTAMA PADA SAAT WEBSITE DIMUAT
+        window.onload = function () {
+            initDatabase();
+            switchTab('beranda');
+        };
     </script>
 </body>
 </html>
