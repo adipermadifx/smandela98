@@ -42,12 +42,27 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col pb-24 md:pb-0">
 
-    <!-- Custom non-blocking Toast System instead of browser alerts -->
+    <!-- Custom non-blocking Toast System -->
     <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:right-5 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-300 bg-emerald-600 text-white px-6 py-3.5 rounded-xl shadow-2xl flex items-center gap-3">
         <span class="p-1 bg-white/20 rounded-lg"><i class="fa-solid fa-circle-check text-lg"></i></span>
         <div>
             <p id="toast-title" class="font-bold text-xs uppercase tracking-wider">Berhasil</p>
             <p id="toast-message" class="text-sm font-medium">Data berhasil diperbarui!</p>
+        </div>
+    </div>
+
+    <!-- Custom Modal Confirm Dialog replacing native confirm() -->
+    <div id="custom-confirm-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl space-y-4 border border-slate-100">
+            <div class="flex items-center gap-3 text-rose-600">
+                <div class="p-2 bg-rose-50 rounded-lg"><i class="fa-solid fa-triangle-exclamation text-xl"></i></div>
+                <h4 class="font-bold text-slate-900 text-base">Konfirmasi Aksi</h4>
+            </div>
+            <p id="confirm-modal-text" class="text-xs text-slate-600 leading-relaxed">Apakah Anda yakin ingin melakukan aksi ini? Aksi ini tidak dapat dibatalkan.</p>
+            <div class="flex items-center justify-end gap-2.5 pt-2">
+                <button id="confirm-btn-cancel" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Batal</button>
+                <button id="confirm-btn-proceed" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Ya, Lanjutkan</button>
+            </div>
         </div>
     </div>
 
@@ -250,7 +265,7 @@
             </div>
         </section>
 
-        <!-- ================= VIEW 2: KABAR ALUMNI & KOMENTAR (NEW) ================= -->
+        <!-- ================= VIEW 2: KABAR ALUMNI & KOMENTAR ================= -->
         <section id="view-kabar" class="tab-content hidden space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Left Column: Status Input and Status List -->
@@ -286,7 +301,7 @@
                                 <textarea id="status-content" required rows="3" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Tulis kabar Anda hari ini di sini..."></textarea>
                             </div>
                             <div class="flex justify-between items-center pt-2">
-                                <p class="text-[10px] text-slate-400"><i class="fa-solid fa-circle-info"></i> Status akan langsung tampil di linimasa</p>
+                                <p class="text-[10px] text-slate-400"><i class="fa-solid fa-circle-info"></i> Status akan tersimpan online di database cloud</p>
                                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2 px-5 rounded-xl shadow-sm transition-all flex items-center gap-1.5">
                                     <i class="fa-solid fa-paper-plane"></i> Posting Kabar
                                 </button>
@@ -294,7 +309,7 @@
                         </form>
                     </div>
 
-                    <!-- Status Feed Feed List -->
+                    <!-- Status Feed List -->
                     <div id="status-feed-container" class="space-y-4">
                         <!-- Dynamically filled with statuses -->
                     </div>
@@ -380,8 +395,8 @@
             <!-- Empty state placeholder -->
             <div id="alumni-empty-state" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
                 <p class="text-3xl text-slate-300"><i class="fa-solid fa-users-slash"></i></p>
-                <h4 class="font-bold text-slate-700 mt-3 text-sm">Alumni tidak ditemukan</h4>
-                <p class="text-xs text-slate-400 mt-1">Gunakan kata kunci pencarian atau filter yang lain.</p>
+                <h4 class="font-bold text-slate-700 mt-3 text-sm">Alumni belum terdaftar</h4>
+                <p class="text-xs text-slate-400 mt-1">Ayo klik tombol "Gabung" di atas untuk menjadi yang pertama terdaftar!</p>
             </div>
         </section>
 
@@ -442,19 +457,19 @@
                 
                 <div class="grid grid-cols-4 gap-3 max-w-lg mt-5">
                     <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl text-center">
-                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-days">29</p>
+                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-days">0</p>
                         <p class="text-[9px] text-rose-500 font-bold uppercase tracking-wider">Hari</p>
                     </div>
                     <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl text-center">
-                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-hours">12</p>
+                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-hours">0</p>
                         <p class="text-[9px] text-rose-500 font-bold uppercase tracking-wider">Jam</p>
                     </div>
                     <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl text-center">
-                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-minutes">45</p>
+                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-minutes">0</p>
                         <p class="text-[9px] text-rose-500 font-bold uppercase tracking-wider">Menit</p>
                     </div>
                     <div class="bg-rose-50 border border-rose-100 p-3 rounded-xl text-center">
-                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-seconds">30</p>
+                        <p class="text-lg sm:text-xl font-black text-rose-700" id="countdown-seconds">0</p>
                         <p class="text-[9px] text-rose-500 font-bold uppercase tracking-wider">Detik</p>
                     </div>
                 </div>
@@ -477,12 +492,19 @@
                 <div id="memori-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-2">
                     <!-- Dynamically populated from JS -->
                 </div>
+                
+                <!-- Empty state for Gallery -->
+                <div id="memori-empty-state" class="hidden text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
+                    <p class="text-3xl text-slate-300"><i class="fa-solid fa-images"></i></p>
+                    <h4 class="font-bold text-slate-700 mt-3 text-sm">Belum ada foto diunggah</h4>
+                    <p class="text-xs text-slate-400 mt-1">Jadilah yang pertama mengunggah foto nostalgia putih-abu abu Anda!</p>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- MOBILE BOTTOM NAVIGATION (Hidden on desktop) - Upgraded to 5 buttons -->
+    <!-- MOBILE BOTTOM NAVIGATION (Hidden on desktop) -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-2 py-2 flex justify-around items-center z-40 md:hidden shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
         <button onclick="switchTab('beranda')" class="mobile-nav-btn flex flex-col items-center justify-center gap-1 py-1 text-slate-400 font-semibold flex-1" data-target="beranda">
             <i class="fa-solid fa-house text-base"></i>
@@ -687,150 +709,235 @@
         </div>
     </div>
 
+    <!-- ================= MODAL 4: PENGATURAN DATABASE CLOUD ================= -->
+    <div id="modal-db-settings" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-slate-100">
+            <div class="megamendung-gradient text-white p-5 flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-base flex items-center gap-1.5"><i class="fa-solid fa-cloud"></i> Pengaturan Database Cloud</h3>
+                    <p class="text-[10px] text-sky-200 uppercase mt-0.5">Sambungkan ke Google Sheets API</p>
+                </div>
+                <button onclick="closeModal('modal-db-settings')" class="p-1.5 text-white/80 hover:text-white hover:bg-white/10 rounded-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-5 space-y-4">
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Tempelkan URL Google Apps Script hasil publikasi Web App Anda untuk memindahkan penyimpanan dari lokal browser ke Google Sheets online.
+                </p>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-600 uppercase mb-1.5">URL Google Apps Script</label>
+                    <input type="url" id="db-api-url" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="https://script.google.com/macros/s/.../exec">
+                </div>
+                <div class="flex items-center justify-end gap-2.5 pt-2 border-t">
+                    <button type="button" onclick="closeModal('modal-db-settings')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-all">Batal</button>
+                    <button type="button" onclick="saveDatabaseConfig()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all">Simpan & Hubungkan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER & RESET DATABASE -->
+    <footer class="bg-gray-950 text-gray-400 text-center py-6 text-xs border-t border-gray-800 space-y-3 relative">
+        <p>&copy; 2026 Ikatan Alumni SMA Negeri 8 Cirebon Angkatan 1998 (SMANDELA). Ditulis dengan ❤️ untuk seluruh angkatan.</p>
+        <div class="flex justify-center flex-wrap gap-4 text-[10px]">
+            <button onclick="openModal('modal-db-settings')" class="text-blue-400 hover:text-blue-300 font-semibold transition-all">
+                <i class="fa-solid fa-gears mr-1"></i> ⚙️ Pengaturan Database Cloud
+            </button>
+            <button onclick="clearAllData()" class="text-rose-400 hover:text-rose-300 font-semibold transition-all">
+                <i class="fa-solid fa-trash-can mr-1"></i> Reset & Bersihkan Data Demo
+            </button>
+        </div>
+        
+        <!-- Live Connection Status Badge Indicator -->
+        <div class="fixed bottom-20 md:bottom-4 right-4 z-40">
+            <span id="connection-status-badge" class="px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-slate-800 text-slate-300 border border-slate-700">
+                <span class="w-2 h-2 rounded-full bg-slate-400 animate-pulse"></span> Mengecek Koneksi...
+            </span>
+        </div>
+    </footer>
+
     <!-- ================= JAVASCRIPT LOGIC & STATE CONTROLLER ================= -->
     <script>
-        // Default Mock Data for SMAN 8 Cirebon Angkatan 98 (SMANDELA)
-        const defaultAlumni = [
-            {
-                id: "alumni-1",
-                name: "Irwan Setiadi",
-                class: "IPA 1",
-                city: "Cirebon",
-                job: "Dosen Teknik Informatika",
-                wa: "81211112222",
-                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
-                quote: "Ingat waktu bolos pelajaran Biologi buat jajan es kelapa di seberang sekolah."
-            },
-            {
-                id: "alumni-2",
-                name: "Ratih Permatasari",
-                class: "IPA 2",
-                city: "Bandung",
-                job: "Apoteker & Owner Klinik Mandiri",
-                wa: "81322223333",
-                avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
-                quote: "Selalu rindu suasana Cirebon sore hari, apalagi kalau sore ada latihan pramuka."
-            },
-            {
-                id: "alumni-3",
-                name: "Hendry Gunawan",
-                class: "IPS 1",
-                city: "Jakarta",
-                job: "IT Manager di Sektor Keuangan",
-                wa: "81233334444",
-                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
-                quote: "Angkatan 98 adalah yang paling tangguh menghadapi transisi milenium baru."
-            },
-            {
-                id: "alumni-4",
-                name: "Siti Rahmawati",
-                class: "IPS 2",
-                city: "Cirebon",
-                job: "Guru Bahasa Indonesia SMAN 8 Cirebon",
-                wa: "81944445555",
-                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80",
-                quote: "Sekarang mengabdi di almamater sendiri rasanya luar biasa tak ternilai."
-            }
-        ];
-
-        const defaultLoker = [
-            {
-                id: "loker-1",
-                type: "umkm",
-                title: "Empal Gentong H. Irwan '98",
-                owner: "Irwan Setiadi (IPA 1)",
-                location: "Cirebon",
-                contact: "81211112222",
-                desc: "Menerima pesanan katering untuk acara pernikahan, reunian, arisan keluarga, dsb. Khas Cirebon bumbu resep turun temurun dengan potongan daging sapi premium yang lembut."
-            },
-            {
-                id: "loker-2",
-                type: "kerja",
-                title: "Customer Service & Admin Online",
-                owner: "CV Mitra Berjaya (Ratih - IPA 2)",
-                location: "Bandung",
-                contact: "81322223333",
-                desc: "Dibutuhkan tenaga admin online untuk mengelola penjualan apotek digital kami di Bandung. Dicari yang teliti, ramah berkomunikasi, dan mahir menggunakan WhatsApp Business & Marketplace."
-            }
-        ];
-
-        const defaultMemori = [
-            {
-                id: "memori-1",
-                title: "Tim Basket Putra SMAN 8 Juara Wali Kota Cup",
-                year: "1997",
-                url: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&auto=format&fit=crop&q=80",
-                author: "Irwan Setiadi"
-            },
-            {
-                id: "memori-2",
-                title: "Suasana Corat-Coret Kelulusan Mei 1998",
-                year: "1998",
-                url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&auto=format&fit=crop&q=80",
-                author: "Siti Rahmawati"
-            }
-        ];
-
-        // Default Status Mock Data with Comment Support
-        const defaultStatus = [
-            {
-                id: "status-1",
-                author: "Asep Sunandar",
-                class: "IPA 1",
-                avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
-                content: "Sampurasun barudak! Kumaha daramang? Aya nu bade olahraga bareng dinten Saptu enjing di Bima?",
-                timestamp: "2 jam yang lalu",
-                likes: 8,
-                comments: [
-                    { author: "Irwan Setiadi", class: "IPA 1", content: "Hayu mang, abi ngiring! Jam sabaraha biasa?", timestamp: "1 jam yang lalu" },
-                    { author: "Siti Rahmawati", class: "IPS 2", content: "Nitip tahu gejrotna weh mang upami mulangna lewat kesambi hehe", timestamp: "30 menit yang lalu" }
-                ]
-            },
-            {
-                id: "status-2",
-                author: "Dian Novita",
-                class: "IPS 1",
-                avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150",
-                content: "Alhamdulillah dinten ieu lancar mukakeun cabang UMKM anyar di daerah Sumber. Hatur nuhun supportna barudak SMANDELA '98!",
-                timestamp: "1 hari yang lalu",
-                likes: 15,
-                comments: []
-            }
-        ];
+        // Clean default production arrays
+        const defaultAlumni = [];
+        const defaultLoker = [];
+        const defaultMemori = [];
+        const defaultStatus = [];
 
         // Core App State (Initialise with memory or default)
-        let alumniState = JSON.parse(localStorage.getItem('smandela98_alumni')) || defaultAlumni;
-        let lokerState = JSON.parse(localStorage.getItem('smandela98_loker')) || defaultLoker;
-        let memoriState = JSON.parse(localStorage.getItem('smandela98_memori')) || defaultMemori;
-        let statusState = JSON.parse(localStorage.getItem('smandela98_status')) || defaultStatus;
+        let alumniState = [];
+        let lokerState = [];
+        let memoriState = [];
+        let statusState = [];
         let currentLokerSubTab = 'umkm';
+        let googleSheetsUrl = localStorage.getItem('smandela98_sheets_url') || '';
 
         // On Application Load
         window.onload = function() {
-            // Populate domisili city filters dynamically
-            populateCityFilter();
+            // Set default active tab
+            switchTab('beranda');
             
-            // Render components
+            // Start Countdown Reuni
+            initCountdown();
+
+            // Load all database contents based on active connection mode
+            initializeDataEngine();
+        };
+
+        // Initialize Data Engine based on dynamic API config
+        async function initializeDataEngine() {
+            const badge = document.getElementById('connection-status-badge');
+            
+            if (googleSheetsUrl && googleSheetsUrl.trim() !== '') {
+                // Show Connecting State
+                badge.className = "px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-blue-900 text-blue-200 border border-blue-700";
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-blue-400 animate-spin border-t-transparent border-2"></span> Menghubungkan ke Cloud...`;
+                
+                try {
+                    await fetchAllFromCloud();
+                    
+                    badge.className = "px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-emerald-950 text-emerald-300 border border-emerald-800";
+                    badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400"></span> ☁️ Mode Online (Google Sheets)`;
+                    showToast('Database online berhasil disinkronkan!', 'success');
+                } catch (error) {
+                    console.error('Koneksi database gagal:', error);
+                    badge.className = "px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-amber-950 text-amber-300 border border-amber-800";
+                    badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span> ⚠️ Cloud Bermasalah (Mode Offline)`;
+                    showToast('Gagal memuat database cloud. Berjalan dalam mode offline.', 'info');
+                    loadLocalFallback();
+                }
+            } else {
+                // Standalone local offline mode
+                badge.className = "px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-slate-900 text-slate-300 border border-slate-800";
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-slate-400 animate-pulse"></span> 📱 Mode Offline (Penyimpanan Lokal)`;
+                loadLocalFallback();
+            }
+
+            // Populate filters and render views
+            populateCityFilter();
             renderAlumni();
             renderLoker();
             renderMemori();
             renderStatus();
             updateStats();
+        }
+
+        // Save Database API Config
+        function saveDatabaseConfig() {
+            const urlInput = document.getElementById('db-api-url').value.trim();
+            localStorage.setItem('smandela98_sheets_url', urlInput);
+            googleSheetsUrl = urlInput;
+            closeModal('modal-db-settings');
+            initializeDataEngine();
+        }
+
+        // Fill data from Local Fallbacks
+        function loadLocalFallback() {
+            alumniState = JSON.parse(localStorage.getItem('smandela98_alumni')) || defaultAlumni;
+            lokerState = JSON.parse(localStorage.getItem('smandela98_loker')) || defaultLoker;
+            memoriState = JSON.parse(localStorage.getItem('smandela98_memori')) || defaultMemori;
+            statusState = JSON.parse(localStorage.getItem('smandela98_status')) || defaultStatus;
             
-            // Start Countdown Reuni
-            initCountdown();
+            // Set input value if exists
+            document.getElementById('db-api-url').value = googleSheetsUrl;
+        }
 
-            // Set default active tab
-            switchTab('beranda');
-        };
+        // Fetch all tables from Google Sheets API Web App
+        async function fetchAllFromCloud() {
+            // Helper function to fetch single sheet API
+            const getSheetData = async (sheetName) => {
+                const response = await fetch(`${googleSheetsUrl}?sheet=${sheetName}&action=read`);
+                const result = await response.json();
+                if (result.status === "success") {
+                    return result.data;
+                } else {
+                    throw new Error(result.message);
+                }
+            };
 
-        // Saving State changes to local memory simulating database persistence
-        function saveState() {
+            // Fetch concurrently
+            const [alumni, status, komentar, loker, memori] = await Promise.all([
+                getSheetData('Alumni'),
+                getSheetData('Status'),
+                getSheetData('Komentar'),
+                getSheetData('Loker'),
+                getSheetData('Memori')
+            ]);
+
+            // Map and assemble Status Comments structure
+            status.forEach(st => {
+                st.comments = komentar.filter(k => k.statusId == st.id);
+            });
+
+            // Update local memory states with cloud data sorted newest first
+            alumniState = alumni.reverse();
+            statusState = status.reverse();
+            lokerState = loker.reverse();
+            memoriState = memori.reverse();
+            
+            document.getElementById('db-api-url').value = googleSheetsUrl;
+        }
+
+        // Helper function to Post content data to Google Sheets API
+        async function writeToCloud(sheetName, action, dataPayload) {
+            if (!googleSheetsUrl) return false;
+            
+            const payload = {
+                sheet: sheetName,
+                action: action,
+                data: dataPayload
+            };
+
+            try {
+                const response = await fetch(googleSheetsUrl, {
+                    method: 'POST',
+                    mode: 'no-cors', // standard workaround for apps script CORS block
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                return true;
+            } catch (error) {
+                console.error('Error posting data to cloud:', error);
+                return false;
+            }
+        }
+
+        // Saving State changes locally as a redundant backup
+        function saveStateLocally() {
             localStorage.setItem('smandela98_alumni', JSON.stringify(alumniState));
             localStorage.setItem('smandela98_loker', JSON.stringify(lokerState));
             localStorage.setItem('smandela98_memori', JSON.stringify(memoriState));
             localStorage.setItem('smandela98_status', JSON.stringify(statusState));
             updateStats();
+        }
+
+        // Custom confirm helper instead of native confirm()
+        function showCustomConfirm(message, callback) {
+            const modal = document.getElementById('custom-confirm-modal');
+            const text = document.getElementById('confirm-modal-text');
+            const cancelBtn = document.getElementById('confirm-btn-cancel');
+            const proceedBtn = document.getElementById('confirm-btn-proceed');
+
+            text.innerText = message;
+            modal.classList.remove('hidden');
+
+            const handleCancel = () => {
+                modal.classList.add('hidden');
+                cleanupListeners();
+            };
+
+            const handleProceed = () => {
+                modal.classList.add('hidden');
+                cleanupListeners();
+                callback();
+            };
+
+            const cleanupListeners = () => {
+                cancelBtn.removeEventListener('click', handleCancel);
+                proceedBtn.removeEventListener('click', handleProceed);
+            };
+
+            cancelBtn.addEventListener('click', handleCancel);
+            proceedBtn.addEventListener('click', handleProceed);
         }
 
         // Display Toast Alerts
@@ -842,6 +949,10 @@
             if (type === 'success') {
                 toast.classList.replace('bg-rose-600', 'bg-emerald-600');
                 title.innerText = 'BERHASIL';
+            } else if (type === 'info') {
+                toast.classList.replace('bg-emerald-600', 'bg-blue-600');
+                toast.classList.replace('bg-rose-600', 'bg-blue-600');
+                title.innerText = 'INFO';
             } else {
                 toast.classList.replace('bg-emerald-600', 'bg-rose-600');
                 title.innerText = 'INFORMASI';
@@ -919,7 +1030,7 @@
         }
 
         // Handle Alumni Registration
-        function handleRegisterAlumni(e) {
+        async function handleRegisterAlumni(e) {
             e.preventDefault();
             
             const name = document.getElementById('reg-name').value.trim();
@@ -941,11 +1052,20 @@
                 job,
                 wa,
                 avatar,
-                quote
+                quote,
+                timestamp: new Date().toISOString()
             };
 
-            alumniState.unshift(newAlumni);
-            saveState();
+            // Post to cloud if configured
+            if (googleSheetsUrl) {
+                showToast('Menyimpan ke Cloud...', 'info');
+                await writeToCloud('Alumni', 'create', newAlumni);
+                await fetchAllFromCloud();
+            } else {
+                alumniState.unshift(newAlumni);
+                saveStateLocally();
+            }
+
             renderAlumni();
             populateCityFilter();
             
@@ -1136,7 +1256,7 @@
         }
 
         // Post Loker & UMKM Form Handler
-        function handlePostLoker(e) {
+        async function handlePostLoker(e) {
             e.preventDefault();
 
             const postType = document.querySelector('input[name="post-type"]:checked').value;
@@ -1153,11 +1273,18 @@
                 owner,
                 location,
                 contact,
-                desc
+                desc,
+                timestamp: new Date().toISOString()
             };
 
-            lokerState.unshift(newPost);
-            saveState();
+            if (googleSheetsUrl) {
+                showToast('Menyimpan data loker...', 'info');
+                await writeToCloud('Loker', 'create', newPost);
+                await fetchAllFromCloud();
+            } else {
+                lokerState.unshift(newPost);
+                saveStateLocally();
+            }
             
             // Clean & close
             document.getElementById('form-loker').reset();
@@ -1171,7 +1298,15 @@
         // Render Memories Gallery Grid
         function renderMemori() {
             const container = document.getElementById('memori-grid');
+            const emptyState = document.getElementById('memori-empty-state');
             container.innerHTML = '';
+
+            if (memoriState.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
 
             memoriState.forEach(item => {
                 const card = document.createElement('div');
@@ -1195,7 +1330,7 @@
         }
 
         // Post Memories Handler
-        function handlePostMemory(e) {
+        async function handlePostMemory(e) {
             e.preventDefault();
 
             const title = document.getElementById('memori-title').value.trim();
@@ -1208,11 +1343,19 @@
                 title,
                 year,
                 url,
-                author
+                author,
+                timestamp: new Date().toISOString()
             };
 
-            memoriState.unshift(newMemori);
-            saveState();
+            if (googleSheetsUrl) {
+                showToast('Mengunggah foto kenangan...', 'info');
+                await writeToCloud('Memori', 'create', newMemori);
+                await fetchAllFromCloud();
+            } else {
+                memoriState.unshift(newMemori);
+                saveStateLocally();
+            }
+
             renderMemori();
 
             // Clean & close
@@ -1237,7 +1380,7 @@
                 return;
             }
 
-            statusState.forEach((status, index) => {
+            statusState.forEach((status) => {
                 const statusCard = document.createElement('div');
                 statusCard.className = "bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-4";
                 
@@ -1252,7 +1395,7 @@
                                         <span class="font-bold text-xs text-slate-900">${c.author}</span>
                                         <span class="bg-slate-200 text-slate-700 text-[9px] px-1.5 py-0.2 rounded font-bold">${c.class || 'Alumni'}</span>
                                     </div>
-                                    <span class="text-[9px] text-slate-400">${c.timestamp}</span>
+                                    <span class="text-[9px] text-slate-400">${c.timestamp === "Baru saja" ? "Baru saja" : new Date(c.timestamp).toLocaleDateString('id-ID')}</span>
                                 </div>
                                 <p class="text-xs text-slate-700 mt-1 font-light">${c.content}</p>
                             </div>
@@ -1272,7 +1415,7 @@
                                     <h4 class="font-extrabold text-slate-900 text-sm leading-none">${status.author}</h4>
                                     <span class="bg-blue-100 text-blue-800 text-[9px] font-bold px-2 py-0.5 rounded-full">${status.class}</span>
                                 </div>
-                                <span class="text-[10px] text-slate-400 mt-1 block">${status.timestamp}</span>
+                                <span class="text-[10px] text-slate-400 mt-1 block">${status.timestamp === "Baru saja" ? "Baru saja" : new Date(status.timestamp).toLocaleDateString('id-ID')}</span>
                             </div>
                         </div>
                     </div>
@@ -1311,7 +1454,7 @@
         }
 
         // Handler to post a new status update
-        function handlePostStatus(e) {
+        async function handlePostStatus(e) {
             e.preventDefault();
 
             const author = document.getElementById('status-author').value.trim();
@@ -1324,60 +1467,96 @@
                 class: userClass,
                 avatar: `https://placehold.co/150/1e3a8a/ffffff?text=${encodeURIComponent(author.charAt(0))}`,
                 content: content,
-                timestamp: "Baru saja",
-                likes: 0,
-                comments: []
+                timestamp: new Date().toISOString(),
+                likes: 0
             };
 
-            statusState.unshift(newStatus);
-            saveState();
-            renderStatus();
+            if (googleSheetsUrl) {
+                showToast('Mengirim kabar...', 'info');
+                await writeToCloud('Status', 'create', newStatus);
+                await fetchAllFromCloud();
+            } else {
+                newStatus.comments = [];
+                statusState.unshift(newStatus);
+                saveStateLocally();
+            }
 
+            renderStatus();
             document.getElementById('status-content').value = '';
             showToast('Kabar status berhasil diposting!');
         }
 
         // Handler for likes
-        function handleLikeStatus(statusId) {
-            const statusIndex = statusState.findIndex(s => s.id === statusId);
-            if (statusIndex !== -1) {
-                statusState[statusIndex].likes = (statusState[statusIndex].likes || 0) + 1;
-                saveState();
-                renderStatus();
+        async function handleLikeStatus(statusId) {
+            if (googleSheetsUrl) {
+                const payload = {
+                    sheet: 'Status',
+                    action: 'like',
+                    id: statusId
+                };
+                
+                try {
+                    await fetch(googleSheetsUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    // Increment in UI directly for snappy feel
+                    const stIndex = statusState.findIndex(s => s.id == statusId);
+                    if (stIndex !== -1) {
+                        statusState[stIndex].likes = (statusState[stIndex].likes || 0) + 1;
+                        renderStatus();
+                    }
+                } catch (e) {
+                    console.error('Like cloud error:', e);
+                }
+            } else {
+                const statusIndex = statusState.findIndex(s => s.id === statusId);
+                if (statusIndex !== -1) {
+                    statusState[statusIndex].likes = (statusState[statusIndex].likes || 0) + 1;
+                    saveStateLocally();
+                    renderStatus();
+                }
             }
         }
 
         // Handler to post a dynamic comment
-        function handlePostComment(e, statusId) {
+        async function handlePostComment(e, statusId) {
             e.preventDefault();
 
             const commentInput = e.target.querySelector('input');
             const content = commentInput.value.trim();
             if (!content) return;
 
-            const statusIndex = statusState.findIndex(s => s.id === statusId);
-            if (statusIndex !== -1) {
-                // Prompt-free identity logic: Since comments are casual, we find registered name or use 'Anonim Alumni'
-                const authorName = "Alumni SMANDELA";
-                
-                const newComment = {
-                    author: authorName,
-                    class: "98",
-                    content: content,
-                    timestamp: "Baru saja"
-                };
+            const newComment = {
+                id: `cmt-${Date.now()}`,
+                statusId: statusId,
+                author: "Alumni SMANDELA",
+                class: "98",
+                content: content,
+                timestamp: new Date().toISOString()
+            };
 
-                if (!statusState[statusIndex].comments) {
-                    statusState[statusIndex].comments = [];
+            if (googleSheetsUrl) {
+                showToast('Mengirim komentar...', 'info');
+                await writeToCloud('Komentar', 'create', newComment);
+                await fetchAllFromCloud();
+            } else {
+                const statusIndex = statusState.findIndex(s => s.id === statusId);
+                if (statusIndex !== -1) {
+                    if (!statusState[statusIndex].comments) {
+                        statusState[statusIndex].comments = [];
+                    }
+                    statusState[statusIndex].comments.push(newComment);
+                    saveStateLocally();
                 }
-
-                statusState[statusIndex].comments.push(newComment);
-                saveState();
-                renderStatus();
-
-                commentInput.value = '';
-                showToast('Komentar Anda terkirim!');
             }
+
+            renderStatus();
+            commentInput.value = '';
+            showToast('Komentar Anda terkirim!');
         }
 
         // Stats updater counter
@@ -1385,6 +1564,55 @@
             document.getElementById('stat-alumni-count').innerText = alumniState.length;
             document.getElementById('stat-jobs-count').innerText = lokerState.length;
             document.getElementById('stat-status-count').innerText = statusState.length;
+        }
+
+        // Admin Trigger: Clear database (handles cloud or local securely)
+        function clearAllData() {
+            showCustomConfirm("Apakah Anda yakin ingin menghapus seluruh data alumni, status, loker, dan foto kenangan untuk memulai database SMANDELA 98 dari awal?", async () => {
+                if (googleSheetsUrl) {
+                    showToast('Membersihkan database cloud...', 'info');
+                    
+                    const clearSheet = async (sheetName) => {
+                        await fetch(googleSheetsUrl, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ sheet: sheetName, action: 'clear' })
+                        });
+                    };
+
+                    await Promise.all([
+                        clearSheet('Alumni'),
+                        clearSheet('Status'),
+                        clearSheet('Komentar'),
+                        clearSheet('Loker'),
+                        clearSheet('Memori')
+                    ]);
+                    
+                    await fetchAllFromCloud();
+                } else {
+                    localStorage.removeItem('smandela98_alumni');
+                    localStorage.removeItem('smandela98_loker');
+                    localStorage.removeItem('smandela98_memori');
+                    localStorage.removeItem('smandela98_status');
+                    
+                    alumniState = [];
+                    lokerState = [];
+                    memoriState = [];
+                    statusState = [];
+                    saveStateLocally();
+                }
+
+                // Re-render
+                populateCityFilter();
+                renderAlumni();
+                renderLoker();
+                renderMemori();
+                renderStatus();
+                updateStats();
+                
+                showToast("Semua data berhasil dibersihkan! Mulai dari nol.", "info");
+            });
         }
 
         // Countdown Reuni Perak System
