@@ -75,7 +75,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-extrabold tracking-tight leading-none text-white">SMANDELA 98 CIREBON</h1>
-                    <p class="text-[10px] text-sky-200 uppercase tracking-widest mt-1">Ikatan Alumni SMA Negeri 8 Angkatan 1998</p>
+                    <p class="text-[10px] text-sky-200 uppercase tracking-widest mt-1">Ikatan Alumni SMAN 8 Cirebon Angkatan 1998</p>
                 </div>
             </div>
             
@@ -188,50 +188,27 @@
                     <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-2 text-lg">
                         <i class="fa-solid fa-bullhorn"></i>
                     </div>
-                    <div class="text-2xl md:text-3xl font-black text-slate-900">2</div>
+                    <div class="text-2xl md:text-3xl font-black text-slate-900" id="stat-agenda-count">0</div>
                     <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Agenda Reuni</p>
                 </div>
             </div>
 
             <!-- Grid: Event list & Bursa Kerja preview -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Agenda preview (Left) -->
+                <!-- Agenda dinamis (Left) -->
                 <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-100 shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-3">
                         <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
                             <i class="fa-solid fa-calendar-days text-blue-600"></i> Agenda & Kegiatan Reuni '98
                         </h3>
-                        <button onclick="switchTab('memori')" class="text-xs font-bold text-blue-600 hover:underline">Lihat Semua</button>
+                        <button onclick="openModal('modal-tambah-agenda')" class="text-xs font-bold bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1">
+                            <i class="fa-solid fa-plus"></i> Tambah Agenda
+                        </button>
                     </div>
                     
-                    <div class="space-y-3.5">
-                        <div class="flex items-center gap-4 p-3 bg-slate-50 rounded-xl hover:bg-slate-100/80 transition-all">
-                            <div class="bg-blue-600 text-white rounded-lg p-2.5 text-center w-14 shrink-0 shadow-sm">
-                                <p class="text-xs uppercase font-extrabold">Agst</p>
-                                <p class="text-lg font-black leading-none">15</p>
-                            </div>
-                            <div class="flex-grow">
-                                <span class="bg-blue-100 text-blue-800 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Silaturahmi</span>
-                                <h4 class="font-bold text-slate-900 text-sm mt-1">Reuni Perak 28 Tahun & Halal Bihalal</h4>
-                                <p class="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
-                                    <i class="fa-solid fa-location-dot text-slate-400"></i> Swiss-Belhotel Cirebon | 10:00 WIB
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4 p-3 bg-slate-50 rounded-xl hover:bg-slate-100/80 transition-all">
-                            <div class="bg-emerald-600 text-white rounded-lg p-2.5 text-center w-14 shrink-0 shadow-sm">
-                                <p class="text-xs uppercase font-extrabold">Sep</p>
-                                <p class="text-lg font-black leading-none">05</p>
-                            </div>
-                            <div class="flex-grow">
-                                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Sosial</span>
-                                <h4 class="font-bold text-slate-900 text-sm mt-1">Bakti Sosial Peduli Sesama Alumni & Guru</h4>
-                                <p class="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
-                                    <i class="fa-solid fa-location-dot text-slate-400"></i> Aula SMA Negeri 8 Cirebon
-                                </p>
-                            </div>
-                        </div>
+                    <!-- Dynamic Agenda Container -->
+                    <div id="agenda-container" class="space-y-3.5">
+                        <!-- Dynamic agenda lists will render here -->
                     </div>
                 </div>
 
@@ -245,18 +222,18 @@
                             Butuh bantuan registrasi, koreksi data, atau ingin menyalurkan bantuan sosial alumni angkatan 98? Hubungi Admin kami:
                         </p>
                         <div class="mt-4 space-y-2.5">
-                            <a href="https://wa.me/628123456789" target="_blank" class="flex items-center gap-3 p-2.5 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-all group">
+                            <a href="https://wa.me/6285777662255" target="_blank" class="flex items-center gap-3 p-2.5 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-all group">
                                 <span class="p-2 bg-emerald-500 text-white rounded-lg shadow-sm"><i class="fa-brands fa-whatsapp"></i></span>
                                 <div class="text-left">
                                     <p class="text-xs text-emerald-800 font-bold leading-none">WhatsApp Admin 1</p>
-                                    <p class="text-[11px] text-emerald-600 mt-0.5">Kang Budi (IPA 1)</p>
+                                    <p class="text-[11px] text-emerald-600 mt-0.5">Kang Cahaya</p>
                                 </div>
                             </a>
-                            <a href="https://wa.me/628987654321" target="_blank" class="flex items-center gap-3 p-2.5 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-all group">
+                            <a href="https://wa.me/6285220239982" target="_blank" class="flex items-center gap-3 p-2.5 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-all group">
                                 <span class="p-2 bg-emerald-500 text-white rounded-lg shadow-sm"><i class="fa-brands fa-whatsapp"></i></span>
                                 <div class="text-left">
                                     <p class="text-xs text-emerald-800 font-bold leading-none">WhatsApp Admin 2</p>
-                                    <p class="text-[11px] text-emerald-600 mt-0.5">Teh Dian (IPS 2)</p>
+                                    <p class="text-[11px] text-emerald-600 mt-0.5">Kang Ujang</p>
                                 </div>
                             </a>
                         </div>
@@ -674,7 +651,7 @@
                 <button onclick="closeModal('modal-tambah-memori')" class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <!-- Form Body -->
-            <form id="form-memori" onsubmit="handlePostMemory(event)" class="p-5 md:p-6 space-y-4">
+            <form id="form-memori" onsubmit="handlePostMemory(event)" class="p-5 md:p-6 space-y-4 overflow-y-auto">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Judul / Keterangan Foto *</label>
                     <input type="text" id="memori-title" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Lagi Praktek Fisika di Laboratorium">
@@ -691,9 +668,13 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Link URL Foto *</label>
-                    <input type="url" id="memori-url" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="https://images.unsplash.com/... atau link foto sejenis">
-                    <p class="text-[10px] text-slate-400 mt-1">Gunakan link eksternal atau dummy image.</p>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Pilih Foto (File Gambar) *</label>
+                    <input type="file" id="memori-file" accept="image/*" required onchange="compressAndPreviewImage(event)" class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <p class="text-[10px] text-slate-400 mt-1">Foto akan dikompresi otomatis agar hemat kuota dan penyimpanan database cloud.</p>
+                    <div id="upload-preview-container" class="mt-2.5 hidden">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase">Pratinjau Hasil Kompresi:</p>
+                        <img id="upload-preview" src="" class="mt-1.5 max-h-36 w-full object-contain rounded-xl border border-slate-100 bg-slate-50">
+                    </div>
                 </div>
 
                 <div>
@@ -709,7 +690,61 @@
         </div>
     </div>
 
-    <!-- ================= MODAL 4: PENGATURAN DATABASE CLOUD ================= -->
+    <!-- ================= MODAL 4: TAMBAH AGENDA REUNI ================= -->
+    <div id="modal-tambah-agenda" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl w-full max-w-md max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-slate-100">
+            <!-- Header -->
+            <div class="megamendung-gradient text-white p-5 flex justify-between items-center shrink-0">
+                <div>
+                    <h3 class="font-bold text-lg">Tambah Agenda Reuni Baru</h3>
+                    <p class="text-[10px] text-sky-200 uppercase mt-0.5">Buat jadwal agenda kegiatan reuni SMANDELA 98</p>
+                </div>
+                <button onclick="closeModal('modal-tambah-agenda')" class="p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <!-- Form Body -->
+            <form id="form-agenda" onsubmit="handlePostAgenda(event)" class="p-5 md:p-6 space-y-4 overflow-y-auto">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Nama Kegiatan / Agenda *</label>
+                    <input type="text" id="agenda-title" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Reuni Perak & Halal Bihalal">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Kategori *</label>
+                        <select id="agenda-category" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="Silaturahmi">Silaturahmi</option>
+                            <option value="Sosial">Bakti Sosial</option>
+                            <option value="Rapat">Rapat Panitia</option>
+                            <option value="Olahraga">Olahraga Bersama</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Tanggal Kegiatan *</label>
+                        <input type="date" id="agenda-date" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Waktu / Jam *</label>
+                        <input type="text" id="agenda-time" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: 10:00 WIB">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Lokasi Tempat *</label>
+                        <input type="text" id="agenda-location" required class="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contoh: Swiss-Belhotel Cirebon">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-3 border-t">
+                    <button type="button" onclick="closeModal('modal-tambah-agenda')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition-all">Batal</button>
+                    <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-md transition-all">Buat Agenda</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= MODAL 5: PENGATURAN DATABASE CLOUD ================= -->
     <div id="modal-db-settings" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-slate-100">
             <div class="megamendung-gradient text-white p-5 flex justify-between items-center">
@@ -762,17 +797,57 @@
         const defaultLoker = [];
         const defaultMemori = [];
         const defaultStatus = [];
+        const defaultAgenda = [];
 
         // Core App State (Initialise with memory or default)
         let alumniState = [];
         let lokerState = [];
         let memoriState = [];
         let statusState = [];
+        let agendaState = [];
         let currentLokerSubTab = 'umkm';
         
-        // PENTING: Ganti teks di bawah ini dengan URL Google Apps Script Anda agar semua HP otomatis online!
-        // Contoh: 'https://script.google.com/macros/s/AKfycb.../exec'
-        let googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbx6CisbmRpOVZVvmmlmWf_JCYPCDO_Gqhhbi19za08HYlQRXjCHWlQqvdf8WAeykglbUQ/exec'; 
+        let compressedImageBase64 = "";
+
+        // Compress image using client-side canvas to save cloud quota
+        function compressAndPreviewImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 500; // Resizes image dimensions down to 500px width
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // High compression (0.5 quality) outputs super small image payload (~15-25KB)
+                    compressedImageBase64 = canvas.toDataURL('image/jpeg', 0.5);
+
+                    // Set preview element src and display container
+                    document.getElementById('upload-preview').src = compressedImageBase64;
+                    document.getElementById('upload-preview-container').classList.remove('hidden');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // PENTING: Silakan ganti teks di bawah ini dengan URL Google Apps Script Anda agar semua HP otomatis online!
+        let googleSheetsUrl = 'SILAKAN_TEMPEL_URL_GOOGLE_APPS_SCRIPT_ANDA_DI_SINI';
         
         // Pengaman jika URL belum diganti di kode, sistem akan mencari di penyimpanan lokal
         if (googleSheetsUrl.includes('SILAKAN_TEMPEL_URL') || !googleSheetsUrl) {
@@ -795,7 +870,7 @@
         async function initializeDataEngine() {
             const badge = document.getElementById('connection-status-badge');
             
-            if (googleSheetsUrl && googleSheetsUrl.trim() !== '') {
+            if (googleSheetsUrl && googleSheetsUrl.trim() !== '' && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
                 // Show Connecting State
                 badge.className = "px-3 py-1.5 rounded-full text-[10px] font-bold shadow-lg flex items-center gap-1.5 transition-all bg-blue-900 text-blue-200 border border-blue-700";
                 badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-blue-400 animate-spin border-t-transparent border-2"></span> Menghubungkan ke Cloud...`;
@@ -826,6 +901,7 @@
             renderLoker();
             renderMemori();
             renderStatus();
+            renderAgenda();
             updateStats();
         }
 
@@ -844,6 +920,7 @@
             lokerState = JSON.parse(localStorage.getItem('smandela98_loker')) || defaultLoker;
             memoriState = JSON.parse(localStorage.getItem('smandela98_memori')) || defaultMemori;
             statusState = JSON.parse(localStorage.getItem('smandela98_status')) || defaultStatus;
+            agendaState = JSON.parse(localStorage.getItem('smandela98_agenda')) || defaultAgenda;
             
             // Set input value if exists
             document.getElementById('db-api-url').value = googleSheetsUrl;
@@ -863,12 +940,13 @@
             };
 
             // Fetch concurrently
-            const [alumni, status, komentar, loker, memori] = await Promise.all([
+            const [alumni, status, komentar, loker, memori, agenda] = await Promise.all([
                 getSheetData('Alumni'),
                 getSheetData('Status'),
                 getSheetData('Komentar'),
                 getSheetData('Loker'),
-                getSheetData('Memori')
+                getSheetData('Memori'),
+                getSheetData('Agenda').catch(() => []) // Handle gracefully if sheet doesn't exist yet
             ]);
 
             // Map and assemble Status Comments structure
@@ -881,13 +959,14 @@
             statusState = status.reverse();
             lokerState = loker.reverse();
             memoriState = memori.reverse();
+            agendaState = agenda ? agenda.reverse() : [];
             
             document.getElementById('db-api-url').value = googleSheetsUrl;
         }
 
         // Helper function to Post content data to Google Sheets API
         async function writeToCloud(sheetName, action, dataPayload) {
-            if (!googleSheetsUrl) return false;
+            if (!googleSheetsUrl || googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) return false;
             
             const payload = {
                 sheet: sheetName,
@@ -915,6 +994,7 @@
             localStorage.setItem('smandela98_loker', JSON.stringify(lokerState));
             localStorage.setItem('smandela98_memori', JSON.stringify(memoriState));
             localStorage.setItem('smandela98_status', JSON.stringify(statusState));
+            localStorage.setItem('smandela98_agenda', JSON.stringify(agendaState));
             updateStats();
         }
 
@@ -1065,7 +1145,7 @@
             };
 
             // Post to cloud if configured
-            if (googleSheetsUrl) {
+            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
                 showToast('Menyimpan ke Cloud...', 'info');
                 await writeToCloud('Alumni', 'create', newAlumni);
                 await fetchAllFromCloud();
@@ -1285,7 +1365,7 @@
                 timestamp: new Date().toISOString()
             };
 
-            if (googleSheetsUrl) {
+            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
                 showToast('Menyimpan data loker...', 'info');
                 await writeToCloud('Loker', 'create', newPost);
                 await fetchAllFromCloud();
@@ -1343,19 +1423,23 @@
 
             const title = document.getElementById('memori-title').value.trim();
             const year = document.getElementById('memori-year').value;
-            const url = document.getElementById('memori-url').value.trim();
             const author = document.getElementById('memori-author').value.trim();
+
+            if (!compressedImageBase64) {
+                showToast('Harap pilih foto dan tunggu hingga kompresi selesai!', 'info');
+                return;
+            }
 
             const newMemori = {
                 id: `memori-${Date.now()}`,
                 title,
                 year,
-                url,
+                url: compressedImageBase64,
                 author,
                 timestamp: new Date().toISOString()
             };
 
-            if (googleSheetsUrl) {
+            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
                 showToast('Mengunggah foto kenangan...', 'info');
                 await writeToCloud('Memori', 'create', newMemori);
                 await fetchAllFromCloud();
@@ -1368,8 +1452,111 @@
 
             // Clean & close
             document.getElementById('form-memori').reset();
+            document.getElementById('upload-preview-container').classList.add('hidden');
+            compressedImageBase64 = ""; // Reset variable
             closeModal('modal-tambah-memori');
             showToast('Foto nostalgia Anda berhasil dibagikan!');
+        }
+
+        // Format Agenda Date Badge helper
+        function formatDateBadge(dateStr) {
+            if(!dateStr) return { day: '??', month: '???' };
+            const date = new Date(dateStr);
+            if (isNaN(date.getTime())) return { day: '??', month: '???' };
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'];
+            return {
+                day: String(date.getDate()).padStart(2, '0'),
+                month: months[date.getMonth()].toUpperCase()
+            };
+        }
+
+        // Render Agenda Lists on Beranda
+        function renderAgenda() {
+            const container = document.getElementById('agenda-container');
+            container.innerHTML = '';
+
+            if (agendaState.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+                        <p class="text-2xl text-slate-300"><i class="fa-solid fa-calendar-xmark"></i></p>
+                        <h4 class="font-bold text-slate-600 mt-2 text-xs">Belum ada agenda terdekat</h4>
+                        <p class="text-[11px] text-slate-400">Klik "Tambah Agenda" di atas untuk menambahkan kegiatan alumni baru!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            agendaState.forEach(agenda => {
+                const dateBadge = formatDateBadge(agenda.date);
+                let badgeColorClass = 'bg-blue-600';
+                let tagColorClass = 'bg-blue-100 text-blue-800';
+
+                if (agenda.category === 'Sosial') {
+                    badgeColorClass = 'bg-emerald-600';
+                    tagColorClass = 'bg-emerald-100 text-emerald-800';
+                } else if (agenda.category === 'Rapat') {
+                    badgeColorClass = 'bg-amber-600';
+                    tagColorClass = 'bg-amber-100 text-amber-800';
+                } else if (agenda.category === 'Olahraga') {
+                    badgeColorClass = 'bg-indigo-600';
+                    tagColorClass = 'bg-indigo-100 text-indigo-800';
+                }
+
+                const card = document.createElement('div');
+                card.className = "flex items-center gap-4 p-3 bg-slate-50 rounded-xl hover:bg-slate-100/80 transition-all";
+                card.innerHTML = `
+                    <div class="${badgeColorClass} text-white rounded-lg p-2.5 text-center w-14 shrink-0 shadow-sm">
+                        <p class="text-[10px] uppercase font-extrabold">${dateBadge.month}</p>
+                        <p class="text-lg font-black leading-none">${dateBadge.day}</p>
+                    </div>
+                    <div class="flex-grow min-w-0">
+                        <span class="${tagColorClass} text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">${agenda.category || 'Silaturahmi'}</span>
+                        <h4 class="font-bold text-slate-900 text-sm mt-1 truncate" title="${agenda.title}">${agenda.title}</h4>
+                        <p class="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5 truncate">
+                            <i class="fa-solid fa-location-dot text-slate-400"></i> ${agenda.location} | ${agenda.time || ''}
+                        </p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Handle post agenda reuni
+        async function handlePostAgenda(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('agenda-title').value.trim();
+            const category = document.getElementById('agenda-category').value;
+            const date = document.getElementById('agenda-date').value;
+            const time = document.getElementById('agenda-time').value.trim();
+            const location = document.getElementById('agenda-location').value.trim();
+
+            const newAgenda = {
+                id: `agenda-${Date.now()}`,
+                title,
+                category,
+                date,
+                time,
+                location,
+                timestamp: new Date().toISOString()
+            };
+
+            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
+                showToast('Menyimpan agenda...', 'info');
+                await writeToCloud('Agenda', 'create', newAgenda);
+                await fetchAllFromCloud();
+            } else {
+                agendaState.unshift(newAgenda);
+                saveStateLocally();
+            }
+
+            renderAgenda();
+            updateStats();
+
+            // Clean & close
+            document.getElementById('form-agenda').reset();
+            closeModal('modal-tambah-agenda');
+            showToast('Agenda reuni baru berhasil ditambahkan!');
         }
 
         // Render Timeline/Status Feed with comments inside
@@ -1479,7 +1666,7 @@
                 likes: 0
             };
 
-            if (googleSheetsUrl) {
+            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
                 showToast('Mengirim kabar...', 'info');
                 await writeToCloud('Status', 'create', newStatus);
                 await fetchAllFromCloud();
@@ -1496,7 +1683,7 @@
 
         // Handler for likes
         async function handleLikeStatus(statusId) {
-            if (googleSheetsUrl) {
+            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
                 const payload = {
                     sheet: 'Status',
                     action: 'like',
@@ -1547,7 +1734,7 @@
                 timestamp: new Date().toISOString()
             };
 
-            if (googleSheetsUrl) {
+            if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
                 showToast('Mengirim komentar...', 'info');
                 await writeToCloud('Komentar', 'create', newComment);
                 await fetchAllFromCloud();
@@ -1572,12 +1759,13 @@
             document.getElementById('stat-alumni-count').innerText = alumniState.length;
             document.getElementById('stat-jobs-count').innerText = lokerState.length;
             document.getElementById('stat-status-count').innerText = statusState.length;
+            document.getElementById('stat-agenda-count').innerText = agendaState.length;
         }
 
         // Admin Trigger: Clear database (handles cloud or local securely)
         function clearAllData() {
-            showCustomConfirm("Apakah Anda yakin ingin menghapus seluruh data alumni, status, loker, dan foto kenangan untuk memulai database SMANDELA 98 dari awal?", async () => {
-                if (googleSheetsUrl) {
+            showCustomConfirm("Apakah Anda yakin ingin menghapus seluruh data alumni, status, loker, agenda, dan foto kenangan untuk memulai database SMANDELA 98 dari awal?", async () => {
+                if (googleSheetsUrl && !googleSheetsUrl.includes('SILAKAN_TEMPEL_URL')) {
                     showToast('Membersihkan database cloud...', 'info');
                     
                     const clearSheet = async (sheetName) => {
@@ -1594,7 +1782,8 @@
                         clearSheet('Status'),
                         clearSheet('Komentar'),
                         clearSheet('Loker'),
-                        clearSheet('Memori')
+                        clearSheet('Memori'),
+                        clearSheet('Agenda')
                     ]);
                     
                     await fetchAllFromCloud();
@@ -1603,11 +1792,13 @@
                     localStorage.removeItem('smandela98_loker');
                     localStorage.removeItem('smandela98_memori');
                     localStorage.removeItem('smandela98_status');
+                    localStorage.removeItem('smandela98_agenda');
                     
                     alumniState = [];
                     lokerState = [];
                     memoriState = [];
                     statusState = [];
+                    agendaState = [];
                     saveStateLocally();
                 }
 
@@ -1617,6 +1808,7 @@
                 renderLoker();
                 renderMemori();
                 renderStatus();
+                renderAgenda();
                 updateStats();
                 
                 showToast("Semua data berhasil dibersihkan! Mulai dari nol.", "info");
