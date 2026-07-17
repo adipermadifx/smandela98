@@ -29,6 +29,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen pb-24 md:pb-8">
 
+  <!-- -->
   <!-- NAVIGATION HEADER FOR DESKTOP -->
   <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200/80 transition-all duration-300">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -63,6 +64,7 @@
   <!-- MAIN CONTENT AREA -->
   <main class="max-w-6xl mx-auto px-4 py-6 md:py-8">
     
+    <!-- -->
     <!-- ================= TAB BERANDA ================= -->
     <div id="tab-beranda" class="tab-content block">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -132,6 +134,7 @@
         <!-- Kolom Kanan: Agenda Reuni & Galeri Nostalgia -->
         <div class="lg:col-span-4 space-y-6">
           
+          <!-- -->
           <!-- Agenda Reuni Section -->
           <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm space-y-4">
             <div class="flex items-center justify-between">
@@ -144,11 +147,10 @@
             </div>
             
             <!-- Daftar Agenda Dinamis -->
-            <div id="agendaList" class="space-y-3">
-              <!-- Default kosong, akan dimuat lewat JS -->
-            </div>
+            <div id="agendaList" class="space-y-3"></div>
           </div>
 
+          <!-- -->
           <!-- Galeri Memori / Nostalgia -->
           <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm space-y-4">
             <div class="flex items-center justify-between">
@@ -161,15 +163,14 @@
             </div>
 
             <!-- Grid Foto Nostalgia -->
-            <div id="nostalgiaGrid" class="grid grid-cols-2 gap-2 max-h-80 overflow-y-auto custom-scroll pr-1">
-              <!-- Default kosong, akan diisi dinamis -->
-            </div>
+            <div id="nostalgiaGrid" class="grid grid-cols-2 gap-2 max-h-80 overflow-y-auto custom-scroll pr-1"></div>
           </div>
 
         </div>
       </div>
     </div>
 
+    <!-- -->
     <!-- ================= TAB ALUMNI (DIREKTORI) ================= -->
     <div id="tab-alumni" class="tab-content hidden">
       <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm mb-6 space-y-4">
@@ -209,11 +210,10 @@
         <h4 class="font-bold text-slate-800 text-sm">Anggota Terdaftar</h4>
         <span id="alumniCountBadge" class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-full">0 Terdaftar</span>
       </div>
-      <div id="alumniList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Dirender otomatis -->
-      </div>
+      <div id="alumniList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 
+    <!-- -->
     <!-- ================= TAB LOKER & UMKM ================= -->
     <div id="tab-loker" class="tab-content hidden">
       <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm mb-6 space-y-4">
@@ -230,13 +230,12 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="lokerList">
-        <!-- Dirender otomatis -->
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="lokerList"></div>
     </div>
 
   </main>
 
+  <!-- -->
   <!-- FOOTER -->
   <footer class="bg-white border-t border-slate-200 text-slate-500 text-xs mt-12 py-8 text-center space-y-3">
     <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -283,6 +282,7 @@
 
   <!-- ================= MODAL WINDOWS ================= -->
 
+  <!-- -->
   <!-- MODAL: DAFTAR DATA ALUMNI -->
   <div id="registerModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl border border-slate-100 overflow-hidden flex flex-col max-h-[90vh]">
@@ -354,6 +354,7 @@
     </div>
   </div>
 
+  <!-- -->
   <!-- MODAL: TAMBAH AGENDA REUNI -->
   <div id="agendaModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-white w-full max-w-md rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
@@ -396,6 +397,7 @@
     </div>
   </div>
 
+  <!-- -->
   <!-- MODAL: PASANG LOKER & BISNIS -->
   <div id="lokerModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-white w-full max-w-md rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
@@ -431,7 +433,7 @@
         </div>
         <div class="space-y-1">
           <label class="block text-[10px] font-bold text-slate-500">Keterangan / Kualifikasi *</label>
-          <textarea id="lokerDesc" required rows="3" placeholder="Tulis deskripsi lowongan kerja atau menu andalan bisnis Anda..." class="w-full bg-slate-50 border border-slate-200 focus:bg-white text-slate-800 p-3 rounded-xl text-xs focus:outline-none focus:border-indigo-500 transition resize-none"></textarea>
+          <textarea id="lokerDesc" required rows="3" placeholder="Tulis deskripsi lowongan kerja atau menu andalan bisnis Anda..." class="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs focus:outline-none focus:border-indigo-500 transition resize-none"></textarea>
         </div>
         <div class="flex justify-end pt-2">
           <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs shadow-sm transition">Pasang Iklan</button>
@@ -440,6 +442,7 @@
     </div>
   </div>
 
+  <!-- -->
   <!-- MODAL: UNGGAH FOTO NOSTALGIA -->
   <div id="nostalgiaModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-white w-full max-w-md rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
@@ -475,6 +478,7 @@
     </div>
   </div>
 
+  <!-- -->
   <!-- MODAL: CONFIG DATABASE URL -->
   <div id="configModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-white w-full max-w-md rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
@@ -498,23 +502,6 @@
     </div>
   </div>
 
-  <!-- MODAL: KUSTOM DIALOG KONFIRMASI (PENGGANTI CONFIRM DEFAULT BROWSER) -->
-  <div id="confirmModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] flex items-center justify-center hidden p-4">
-    <div class="bg-white w-full max-w-sm rounded-2xl shadow-xl border border-slate-100 overflow-hidden p-6 space-y-4 text-center">
-      <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center text-red-600 mx-auto text-xl">
-        <i class="fas fa-exclamation-triangle"></i>
-      </div>
-      <div class="space-y-1">
-        <h3 class="font-bold text-slate-800 text-sm" id="confirmTitle">Konfirmasi</h3>
-        <p class="text-xs text-slate-500" id="confirmMessage">Apakah Anda yakin ingin melanjutkan tindakan ini?</p>
-      </div>
-      <div class="flex space-x-3 pt-2">
-        <button onclick="closeConfirmModal(false)" class="flex-1 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-semibold py-2 rounded-xl text-xs transition">Batal</button>
-        <button onclick="closeConfirmModal(true)" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-xl text-xs transition" id="confirmConfirmBtn">Ya, Hapus</button>
-      </div>
-    </div>
-  </div>
-
   <!-- MODAL: LOADING SCREEN SPINNER -->
   <div id="loadingOverlay" class="fixed inset-0 bg-slate-900/30 backdrop-blur-[2px] z-[110] flex flex-col items-center justify-center hidden">
     <div class="bg-white p-5 rounded-2xl shadow-lg border border-slate-100 flex flex-col items-center space-y-3">
@@ -525,7 +512,8 @@
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // PRE-INTEGRASI SCRIPT URL ASLI ANDA (ONLINE OTOMATIS)
+    
+    // URL Google Apps Script Anda yang sudah terintegrasi secara permanen
     let googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbxVKa7H0aFaQagQbzia8CMpM6Z0YKYHV1bWtHjEJTWvxXGxVbV5Ik2cnSScjQfYNHjN8g/exec';
 
     // State Aplikasi
@@ -538,9 +526,6 @@
       agenda: []
     };
 
-    // Callback untuk custom confirmation dialog
-    let confirmCallback = null;
-
     // Inisialisasi Database saat Window Load
     window.onload = function() {
       initDatabase();
@@ -551,9 +536,14 @@
       const savedUrl = localStorage.getItem('smandela98_sheets_url');
       if (savedUrl) {
         googleSheetsUrl = savedUrl;
+      } else {
+        localStorage.setItem('smandela98_sheets_url', googleSheetsUrl);
       }
       
-      document.getElementById('inputSheetsUrl').value = googleSheetsUrl || '';
+      const configInput = document.getElementById('inputSheetsUrl');
+      if (configInput) {
+        configInput.value = googleSheetsUrl || '';
+      }
       updateConnectionBadge();
       loadAllData();
     }
@@ -563,12 +553,14 @@
       const dot = document.getElementById('connectionDot');
       const text = document.getElementById('connectionText');
       
-      if (googleSheetsUrl && googleSheetsUrl.startsWith('https://')) {
-        dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
-        text.innerText = '☁️ Mode Online (Google Sheets)';
-      } else {
-        dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse';
-        text.innerText = '💾 Mode Offline (Penyimpanan Lokal)';
+      if (dot && text) {
+        if (googleSheetsUrl && googleSheetsUrl.startsWith('https://')) {
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
+          text.innerText = '☁️ Mode Online (Google Sheets)';
+        } else {
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse';
+          text.innerText = '💾 Mode Offline (Penyimpanan Lokal)';
+        }
       }
     }
 
@@ -577,7 +569,7 @@
       const overlay = document.getElementById('loadingOverlay');
       const text = document.getElementById('loadingText');
       if (overlay) {
-        text.innerText = message;
+        if (text) text.innerText = message;
         if (show) overlay.classList.remove('hidden');
         else overlay.classList.add('hidden');
       }
@@ -601,9 +593,22 @@
           const sheets = ['Alumni', 'Status', 'Komentar', 'Loker', 'Memori', 'Agenda'];
           for (const sheet of sheets) {
             const res = await fetch(googleSheetsUrl + '?sheet=' + sheet + '&action=read');
-            const result = await res.json();
-            if (result.status === 'success') {
-              state[sheet.toLowerCase()] = result.data || [];
+            const responseText = await res.text();
+            
+            // Pengaman parser: Jika server-side membalas error HTML (bukan JSON), tangkap agar browser tidak crash!
+            try {
+              const result = JSON.parse(responseText);
+              if (result.status === 'success') {
+                state[sheet.toLowerCase()] = result.data || [];
+              } else {
+                console.warn("API membalas pesan kegagalan untuk " + sheet + ": ", result.message);
+              }
+            } catch (jsonErr) {
+              console.warn("Respons database tidak berformat JSON untuk sheet '" + sheet + "'. Mungkin Apps Script belum dideploy dengan izin publik (Anyone) atau sheet belum dibuat di Spreadsheet Anda.");
+              loadFromLocal();
+              showLoading(false);
+              renderAll();
+              return;
             }
           }
           saveToLocal(); // Backup data cloud ke local cache
@@ -628,7 +633,7 @@
       if (saved) {
         state = JSON.parse(saved);
       } else {
-        // Tulis data percontohan / template pertama kali agar tidak kosong melompong
+        // Tulis data percontohan pertama kali agar tidak kosong melompong
         state.alumni = [
           { id: 'al_1', name: 'Kang Cahaya', class: 'IPA 1', city: 'Cirebon', job: 'PNS', wa: '085777662255', quote: 'Hidup adalah silaturahmi.', timestamp: '12/12/2025' },
           { id: 'al_2', name: 'Kang Ujang', class: 'IPS 2', city: 'Cirebon', job: 'Wiraswasta', wa: '085220239982', quote: 'Saling bantu sesama alumni.', timestamp: '12/12/2025' }
@@ -646,19 +651,19 @@
       }
     }
 
-    // Melakukan POST ke API
+    // Melakukan POST ke API Cloud
     async function postDataToCloud(sheetName, data, action = 'create') {
       if (googleSheetsUrl && googleSheetsUrl.startsWith('https://')) {
         try {
           showLoading(true, "Mengirim data ke database...");
-          const res = await fetch(googleSheetsUrl, {
+          await fetch(googleSheetsUrl, {
             method: 'POST',
             mode: 'no-cors', // Mencegah isu CORS preflight
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify({ sheet: sheetName, action: action, data: data, id: data ? data.id : undefined })
           });
-          // Karena mode no-cors, response tidak bisa dibaca langsung secara detil.
-          // Kita beri jeda 1 detik lalu lakukan loading ulang data.
+          
+          // Beri jeda 1.5 detik agar Google Sheets selesai menulis, lalu sinkronkan ulang tampilan
           setTimeout(async () => {
             await loadAllData();
           }, 1500);
@@ -696,7 +701,8 @@
     // Navigasi Tab Menu
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.getElementById('tab-' + tabId).classList.remove('hidden');
+      const activeTab = document.getElementById('tab-' + tabId);
+      if (activeTab) activeTab.classList.remove('hidden');
 
       // Update Navigasi Atas (PC)
       document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -770,10 +776,12 @@
     // Toggle Tampilan Form Komentar
     function toggleCommentForm(statusId) {
       const box = document.getElementById('commentBox-' + statusId);
-      if (box.classList.contains('hidden')) {
-        box.classList.remove('hidden');
-      } else {
-        box.classList.add('hidden');
+      if (box) {
+        if (box.classList.contains('hidden')) {
+          box.classList.remove('hidden');
+        } else {
+          box.classList.add('hidden');
+        }
       }
     }
 
@@ -783,7 +791,8 @@
       if (!feedDiv) return;
 
       const items = state.status || [];
-      document.getElementById('statusCountBadge').innerText = items.length + ' Status';
+      const badge = document.getElementById('statusCountBadge');
+      if (badge) badge.innerText = items.length + ' Status';
 
       if (items.length === 0) {
         feedDiv.innerHTML = '<div class="text-center py-8 text-slate-400 bg-white rounded-2xl border border-slate-100 shadow-sm"><i class="far fa-comments text-3xl mb-2"></i><p class="text-xs">Belum ada kabar status yang dibagikan.</p></div>';
@@ -813,7 +822,7 @@
         }
 
         // Cari tahu avatar berdasarkan nama alumni (jika ada terdaftar)
-        const alumniRecord = state.alumni.find(al => al.name.toLowerCase() === st.author.toLowerCase());
+        const alumniRecord = (state.alumni || []).find(al => al.name && al.name.toLowerCase() === st.author.toLowerCase());
         const avatarUrl = alumniRecord ? alumniRecord.avatar : null;
 
         return '<div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm space-y-4">' +
@@ -896,10 +905,12 @@
           
           ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, size, size);
           
-          // Konversi ke format JPEG dengan kualitas 0.75 (Sangat ringan ~5KB)
           const base64 = canvas.toDataURL('image/jpeg', 0.75);
-          document.getElementById('alumniAvatarBase64').value = base64;
-          document.getElementById('avatarPreviewContainer').innerHTML = '<img src="' + base64 + '" class="w-full h-full object-cover">';
+          const hiddenInput = document.getElementById('alumniAvatarBase64');
+          const preview = document.getElementById('avatarPreviewContainer');
+          
+          if (hiddenInput) hiddenInput.value = base64;
+          if (preview) preview.innerHTML = '<img src="' + base64 + '" class="w-full h-full object-cover">';
         };
         img.src = e.target.result;
       };
@@ -938,9 +949,9 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
           
-          // Konversi ke format JPEG dengan kualitas 0.65 (sangat hemat kuota ~15KB)
           const base64 = canvas.toDataURL('image/jpeg', 0.65);
-          document.getElementById('nostalgiaBase64').value = base64;
+          const hiddenInput = document.getElementById('nostalgiaBase64');
+          if (hiddenInput) hiddenInput.value = base64;
         };
         img.src = e.target.result;
       };
@@ -956,7 +967,8 @@
       const job = document.getElementById('alumniJob').value.trim();
       const wa = document.getElementById('alumniWa').value.trim();
       const quote = document.getElementById('alumniQuote').value.trim();
-      const avatar = document.getElementById('alumniAvatarBase64').value; // Mengambil base64
+      const avatarInput = document.getElementById('alumniAvatarBase64');
+      const avatar = avatarInput ? avatarInput.value : "";
 
       const newAlumni = {
         id: 'al_' + Date.now(),
@@ -973,7 +985,8 @@
       const ok = await postDataToCloud('Alumni', newAlumni);
       if (ok) {
         document.getElementById('alumniForm').reset();
-        document.getElementById('avatarPreviewContainer').innerHTML = '<i class="fas fa-user-circle text-3xl"></i>';
+        const preview = document.getElementById('avatarPreviewContainer');
+        if (preview) preview.innerHTML = '<i class="fas fa-user-circle text-3xl"></i>';
         closeRegisterModal();
         switchTab('alumni');
       }
@@ -984,18 +997,22 @@
       const alumniListDiv = document.getElementById('alumniList');
       if (!alumniListDiv) return;
 
-      const query = document.getElementById('searchAlumni').value.toLowerCase();
+      const queryInput = document.getElementById('searchAlumni');
+      const query = queryInput ? queryInput.value.toLowerCase() : '';
       const selectedClass = document.getElementById('filterClass').value;
 
       const filtered = (state.alumni || []).filter(al => {
-        const matchQuery = al.name.toLowerCase().includes(query) || 
-                           al.city.toLowerCase().includes(query) || 
-                           al.job.toLowerCase().includes(query);
+        const nameMatch = al.name ? al.name.toLowerCase().includes(query) : false;
+        const cityMatch = al.city ? al.city.toLowerCase().includes(query) : false;
+        const jobMatch = al.job ? al.job.toLowerCase().includes(query) : false;
+        
+        const matchQuery = nameMatch || cityMatch || jobMatch;
         const matchClass = selectedClass === 'Semua' || al.class === selectedClass;
         return matchQuery && matchClass;
       });
 
-      document.getElementById('alumniCountBadge').innerText = filtered.length + ' Alumni';
+      const badge = document.getElementById('alumniCountBadge');
+      if (badge) badge.innerText = filtered.length + ' Alumni';
 
       if (filtered.length === 0) {
         alumniListDiv.innerHTML = '<div class="col-span-full text-center py-8 text-slate-400 bg-white rounded-2xl border border-slate-100 shadow-sm"><i class="fas fa-user-friends text-3xl mb-2"></i><p class="text-xs">Tidak ada alumni yang cocok dengan pencarian Anda.</p></div>';
@@ -1003,6 +1020,7 @@
       }
 
       alumniListDiv.innerHTML = filtered.map(al => {
+        const cleanWa = String(al.wa || '').replace(/[^0-9]/g, '');
         return '<div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-4 flex flex-col justify-between">' +
           '<div class="flex items-start space-x-3">' +
             '<div class="w-12 h-12 rounded-full overflow-hidden bg-indigo-50 border border-slate-200 shrink-0 flex items-center justify-center">' +
@@ -1018,7 +1036,7 @@
           '<p class="text-[11px] text-slate-600 italic bg-slate-50 p-2.5 rounded-xl border border-slate-100/50 line-clamp-2">"' + al.quote + '"</p>' +
           '<div class="flex items-center justify-between pt-1 border-t border-slate-100">' +
             '<span class="text-[9px] text-slate-400">Bergabung: ' + al.timestamp + '</span>' +
-            '<a href="https://wa.me/' + String(al.wa || '').replace(/[^0-9]/g, '') + '" target="_blank" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 px-3 py-1.5 rounded-xl text-[10px] font-bold transition flex items-center">' +
+            '<a href="https://wa.me/' + cleanWa + '" target="_blank" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 px-3 py-1.5 rounded-xl text-[10px] font-bold transition flex items-center">' +
               '<i class="fab fa-whatsapp mr-1 text-xs"></i> Hubungi' +
             '</a>' +
           '</div>' +
@@ -1070,6 +1088,7 @@
         const isLoker = lk.type === 'Loker';
         const badgeColor = isLoker ? 'bg-indigo-50 text-indigo-600' : 'bg-amber-50 text-amber-600';
         const typeLabel = isLoker ? 'Lowongan Kerja' : 'UMKM & Bisnis 98';
+        const cleanContact = String(lk.contact || '').replace(/[^0-9]/g, '');
 
         return '<div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300 space-y-4 flex flex-col justify-between">' +
           '<div class="space-y-2">' +
@@ -1083,7 +1102,7 @@
             '<p class="text-xs text-slate-600 leading-relaxed pt-1">' + lk.desc + '</p>' +
           '</div>' +
           '<div class="pt-3 border-t border-slate-100 flex justify-end">' +
-            '<a href="https://wa.me/' + String(lk.contact || '').replace(/[^0-9]/g, '') + '" target="_blank" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 px-3.5 py-1.5 rounded-xl text-[10px] font-bold transition flex items-center">' +
+            '<a href="https://wa.me/' + cleanContact + '" target="_blank" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-600 px-3.5 py-1.5 rounded-xl text-[10px] font-bold transition flex items-center">' +
               '<i class="fab fa-whatsapp mr-1 text-xs"></i> Kirim Lamaran / Pesan' +
             '</a>' +
           '</div>' +
@@ -1097,10 +1116,12 @@
       const title = document.getElementById('nostalgiaTitle').value.trim();
       const year = document.getElementById('nostalgiaYear').value;
       const author = document.getElementById('nostalgiaAuthor').value.trim();
-      const base64 = document.getElementById('nostalgiaBase64').value; // Mengambil base64 yang terkompresi
+      const base64Input = document.getElementById('nostalgiaBase64');
+      const base64 = base64Input ? base64Input.value : "";
 
       if (!base64) {
-        alert("Harap tunggu hingga foto selesai diproses!");
+        // Fallback default placeholder if image hasn't loaded
+        alert("Mohon tunggu sesaat hingga file gambar selesai dikompresi!");
         return;
       }
 
@@ -1116,7 +1137,7 @@
       const ok = await postDataToCloud('Memori', newMemori);
       if (ok) {
         document.getElementById('nostalgiaForm').reset();
-        document.getElementById('nostalgiaBase64').value = "";
+        if (base64Input) base64Input.value = "";
         closeNostalgiaModal();
       }
     }
@@ -1186,7 +1207,7 @@
         return;
       }
 
-      // Urutkan agenda terdekat berdasarkan ID/Waktu
+      // Urutkan agenda terdekat berdasarkan Tanggal
       const sortedAgenda = [...items].sort((a, b) => a.date.localeCompare(b.date));
 
       listDiv.innerHTML = sortedAgenda.map(ag => {
@@ -1245,34 +1266,6 @@
       closeConfigModal();
       initDatabase();
     }
-
-    // Jendela Konfirmasi Kustom (Pengganti confirm() default)
-    function showConfirmModal(title, message, callback) {
-      document.getElementById('confirmTitle').innerText = title;
-      document.getElementById('confirmMessage').innerText = message;
-      document.getElementById('confirmModal').classList.remove('hidden');
-      confirmCallback = callback;
-    }
-
-    function closeConfirmModal(accepted) {
-      document.getElementById('confirmModal').classList.add('hidden');
-      if (confirmCallback) {
-        confirmCallback(accepted);
-        confirmCallback = null;
-      }
-    }
   </script>
 </body>
 </html>
-```
-eof
-
----
-
-### 📝 Cara Memasang Ini di GitHub Anda:
-1. **Salin Seluruh Kode:** Klik tombol **"Salin"** di sudut kanan atas kotak berkas kode `index.html` di atas.
-2. **Tempelkan di GitHub:** Masuk ke akun GitHub Anda, pilih repositori `smandela98`, edit file `index.html` Anda, hapus seluruh isinya, lalu tempelkan kode yang baru saja disalin.
-3. **Commit Changes:** Klik tombol hijau **"Commit Changes"** untuk menyimpan berkas.
-4. **Selesai!** Tunggu sekitar 1 menit hingga proses publikasi otomatis dari GitHub Pages selesai.
-
-Kini, portal alumni SMANDELA 98 Anda akan langsung berjalan dalam **Mode Online (Google Sheets)** secara otomatis dan sinkron di semua HP maupun laptop tanpa perlu melakukan pengaturan manual apa pun lagi!
