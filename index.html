@@ -769,7 +769,15 @@
         let memoriState = [];
         let statusState = [];
         let currentLokerSubTab = 'umkm';
-        let googleSheetsUrl = localStorage.getItem('smandela98_sheets_url') || '';
+        
+        // PENTING: Ganti teks di bawah ini dengan URL Google Apps Script Anda agar semua HP otomatis online!
+        // Contoh: 'https://script.google.com/macros/s/AKfycb.../exec'
+        let googleSheetsUrl = 'https://script.google.com/macros/s/AKfycbx6CisbmRpOVZVvmmlmWf_JCYPCDO_Gqhhbi19za08HYlQRXjCHWlQqvdf8WAeykglbUQ/exec'; 
+        
+        // Pengaman jika URL belum diganti di kode, sistem akan mencari di penyimpanan lokal
+        if (googleSheetsUrl.includes('SILAKAN_TEMPEL_URL') || !googleSheetsUrl) {
+            googleSheetsUrl = localStorage.getItem('smandela98_sheets_url') || '';
+        }
 
         // On Application Load
         window.onload = function() {
